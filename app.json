@@ -1,0 +1,65 @@
+{
+  "expo": {
+    "name": "108 Counter",
+    "slug": "108-counter",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "dark",
+    "scheme": "counter108",
+    "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#1a0505"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.counter108.app",
+      "buildNumber": "1",
+      "infoPlist": {
+        "CFBundleDisplayName": "108 Counter",
+        "NSUserNotificationUsageDescription": "108 Counter sends a reminder before or on each Hindu festival, at the time you choose."
+      }
+    },
+    "android": {
+      "package": "com.counter108.app",
+      "versionCode": 1,
+      "softwareKeyboardLayoutMode": "resize",
+      "navigationBar": {
+        "backgroundColor": "#1a0505",
+        "barStyle": "light-content"
+      },
+      "adaptiveIcon": {
+        "backgroundColor": "#1a0505",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      },
+      "predictiveBackGestureEnabled": false
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "expo-splash-screen",
+      "expo-font",
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/icon.png",
+          "color": "#FF9933"
+        }
+      ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "a7f887db-852a-4a5b-84a7-ae45ca9ae865"
+      },
+      "feedbackFormUrl": "https://docs.google.com/forms/d/e/1FAIpQLScwn2lR2H4QsomtRvmKIljOSSqGWOk4C_qubIaSDDYrJbIj1g/viewform",
+      "privacyPolicyUrl": "https://sai0216.github.io/108-counter/privacy-policy.html",
+      "supportEmail": "saijdeveloper0216@gmail.com"
+    },
+    "owner": "sai0216"
+  }
+}
