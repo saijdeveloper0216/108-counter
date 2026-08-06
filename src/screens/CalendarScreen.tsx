@@ -1,19 +1,25 @@
-import { useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { Calendar, DateData } from 'react-native-calendars';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { CalendarDayCell } from '../components/CalendarDayCell';
 import { CalendarLocalePicker } from '../components/CalendarLocalePicker';
 import { useSettings } from '../context/SettingsContext';
 import {
   formatFestivalDate,
   getActiveTimezone,
   getCalendarHeaderSubtitle,
+  getCalendarMarks,
   getCalendarTimezoneLabel,
   getFestivalViewsForRegion,
   getFestivalsForRegion,
-  getMarkedDates,
+  getLunarDayForDate,
+  getLunarDaysForMonth,
+  getLunarLabel,
   getTodayString,
+  formatLunarTiming,
 } from '../data/festivals';
+import type { LunarDay } from '../data/lunarDays';
 import { getMasamForDate, getMasamsForMonth } from '../data/masams';
 import { getMasamSignificance } from '../data/traditions';
 import { colors } from '../constants/theme';
@@ -34,6 +40,21 @@ function formatMonthLabel(monthKey: string) {
     month: 'long',
     year: 'numeric',
   });
+}
+
+function resolveDateInMonth(monthKey: string, dayOfMonth: number) {
+  const [year, month] = monthKey.split('-').map(Number);
+  const lastDay = new Date(year, month, 0).getDate();
+  const day = Math.min(Math.max(1, dayOfMonth), lastDay);
+  return `${monthKey}-${String(day).padStart(2, '0')}`;
+}
+
+/** Keep the selected day aligned with the month on screen (e.g. 14 Jun → 14 Jul). */
+function resolveSelectedDateForMonth(monthKey: string, currentSelected: string, today: string) {
+  if (monthKey === today.slice(0, 7)) {
+    return today;
+  }
+  return resolveDateInMonth(monthKey, Number(currentSelected.slice(8, 10)));
 }
 
 export function CalendarScreen() {
@@ -59,19 +80,23 @@ export function CalendarScreen() {
   const monthMasams = useMemo(() => getMasamsForMonth(visibleMonthKey), [visibleMonthKey]);
 
   const markedDates = useMemo(() => {
-    const marks = getMarkedDates(festivals) as Record<
-      string,
-      { marked?: boolean; dotColor?: string; selected?: boolean; selectedColor?: string }
-    >;
-    marks[selectedDate] = {
-      ...(marks[selectedDate] ?? {}),
-      marked: Boolean(marks[selectedDate]?.marked),
-      selected: true,
-      selectedColor: colors.saffron,
-      dotColor: colors.gold,
-    };
+    const marks = getCalendarMarks(festivals);
+    const selected = marks[selectedDate] ?? {};
+    marks[selectedDate] = { ...selected, selected: true };
     return marks;
   }, [festivals, selectedDate]);
+
+  const monthLunarDays = useMemo(() => getLunarDaysForMonth(visibleMonthKey), [visibleMonthKey]);
+
+  const selectedLunarDay = getLunarDayForDate(selectedDate);
+  const selectedDateInVisibleMonth = selectedDate.startsWith(visibleMonthKey);
+
+  const renderDay = useCallback(
+    (props: { date?: DateData; state?: string; marking?: (typeof markedDates)[string]; onPress?: (date: DateData) => void }) => (
+      <CalendarDayCell {...props} />
+    ),
+    [],
+  );
 
   const monthFestivals = useMemo(
     () =>
@@ -87,7 +112,9 @@ export function CalendarScreen() {
   };
 
   const handleMonthChange = (month: DateData) => {
-    setVisibleMonthKey(monthKeyFromParts(month.year, month.month));
+    const nextMonthKey = monthKeyFromParts(month.year, month.month);
+    setVisibleMonthKey(nextMonthKey);
+    setSelectedDate((current) => resolveSelectedDateForMonth(nextMonthKey, current, today));
   };
 
   const handleCalendarLocaleChange = (locale: string) => {
@@ -118,13 +145,12 @@ export function CalendarScreen() {
 
         {settings.calendarLocale === 'usa' ? (
           <Text style={styles.timezoneNote}>
-            Festival dates follow US local panchang for {timezoneLabel}. Some temples may observe a day earlier or
-            later.
+            Festival dates follow US local panchang for {timezoneLabel}. Purnima and Amavasya start/end times are shown in IST.
           </Text>
         ) : (
           <Text style={styles.timezoneNote}>
-            Festival dates follow the Indian lunar calendar (IST). State tags note where observance is especially
-            common.
+            Festival dates follow the Indian lunar calendar (IST). Purnima and Amavasya times are in IST.
+            State tags note where observance is especially common.
           </Text>
         )}
 
@@ -148,6 +174,7 @@ export function CalendarScreen() {
           onDayPress={handleDayPress}
           onMonthChange={handleMonthChange}
           markedDates={markedDates}
+          dayComponent={renderDay}
           theme={{
             calendarBackground: 'rgba(255, 255, 255, 0.04)',
             dayTextColor: colors.cream,
@@ -161,6 +188,12 @@ export function CalendarScreen() {
           }}
           style={styles.calendar}
         />
+
+        <View style={styles.legendRow}>
+          <LegendItem label="Festival" kind="festival" />
+          <LegendItem label="Purnima" kind="purnima" />
+          <LegendItem label="Amavasya" kind="amavasya" />
+        </View>
 
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Masams in {formatMonthLabel(visibleMonthKey)}</Text>
@@ -180,9 +213,12 @@ export function CalendarScreen() {
           )}
         </View>
 
-        {selectedDayFestivals.length > 0 && (
+        {selectedDateInVisibleMonth && (selectedDayFestivals.length > 0 || selectedLunarDay) ? (
           <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Festivals on {formatFestivalDate(selectedDate, activeTimezone)}</Text>
+            <Text style={styles.sectionTitle}>Observances on {formatFestivalDate(selectedDate, activeTimezone)}</Text>
+            {selectedLunarDay ? (
+              <LunarCard day={selectedLunarDay} date={formatFestivalDate(selectedDate, activeTimezone)} />
+            ) : null}
             {selectedDayFestivals.map((festival) => (
               <FestivalCard
                 key={festival.id}
@@ -192,7 +228,24 @@ export function CalendarScreen() {
               />
             ))}
           </View>
-        )}
+        ) : null}
+
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>
+            Moon days in {formatMonthLabel(visibleMonthKey)}
+          </Text>
+          {monthLunarDays.length === 0 ? (
+            <Text style={styles.emptyText}>No purnima or amavasya listed for this month.</Text>
+          ) : (
+            monthLunarDays.map((lunarDay) => (
+              <LunarCard
+                key={`${lunarDay.kind}-${lunarDay.date}`}
+                day={lunarDay}
+                date={formatFestivalDate(lunarDay.date, activeTimezone)}
+              />
+            ))
+          )}
+        </View>
 
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>
@@ -222,6 +275,44 @@ function formatStateLabel(states: string[]): string {
     return states[0];
   }
   return states.join(' · ');
+}
+
+function LegendItem({ label, kind }: { label: string; kind: 'festival' | 'purnima' | 'amavasya' }) {
+  return (
+    <View style={styles.legendItem}>
+      {kind === 'festival' ? <View style={styles.legendFestivalDot} /> : null}
+      {kind === 'purnima' ? <View style={styles.legendPurnimaMoon} /> : null}
+      {kind === 'amavasya' ? <View style={styles.legendAmavasyaMoon} /> : null}
+      <Text style={styles.legendLabel}>{label}</Text>
+    </View>
+  );
+}
+
+function LunarCard({
+  day,
+  date,
+}: {
+  day: LunarDay;
+  date?: string;
+}) {
+  return (
+    <View style={styles.lunarCard}>
+      <View style={styles.lunarCardHeader}>
+        {day.kind === 'purnima' ? <View style={styles.legendPurnimaMoon} /> : <View style={styles.legendAmavasyaMoon} />}
+        <Text style={styles.lunarCardTitle}>{getLunarLabel(day.kind)}</Text>
+      </View>
+      {date ? <Text style={styles.lunarCardDate}>{date}</Text> : null}
+      <Text style={styles.lunarTimingLabel}>Begins (IST)</Text>
+      <Text style={styles.lunarTimingValue}>{formatLunarTiming(day.begins)}</Text>
+      <Text style={styles.lunarTimingLabel}>Ends (IST)</Text>
+      <Text style={styles.lunarTimingValue}>{formatLunarTiming(day.ends)}</Text>
+      <Text style={styles.lunarCardDescription}>
+        {day.kind === 'purnima'
+          ? 'Full moon tithi window for India (New Delhi panchang).'
+          : 'New moon tithi window for India (New Delhi panchang).'}
+      </Text>
+    </View>
+  );
 }
 
 function FestivalCard({
@@ -287,9 +378,90 @@ const styles = StyleSheet.create({
   calendar: {
     borderRadius: 18,
     overflow: 'hidden',
-    marginBottom: 20,
+    marginBottom: 10,
     borderWidth: 1,
     borderColor: 'rgba(255, 153, 51, 0.18)',
+  },
+  legendRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 14,
+    marginBottom: 20,
+    paddingHorizontal: 4,
+  },
+  legendItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+  },
+  legendLabel: {
+    fontSize: 12,
+    color: colors.creamMuted,
+    fontWeight: '600',
+  },
+  legendFestivalDot: {
+    width: 6,
+    height: 6,
+    borderRadius: 3,
+    backgroundColor: colors.gold,
+  },
+  legendPurnimaMoon: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    backgroundColor: '#FFFFFF',
+    borderWidth: 1,
+    borderColor: 'rgba(255, 215, 0, 0.55)',
+  },
+  legendAmavasyaMoon: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    backgroundColor: '#0A0A0A',
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.75)',
+  },
+  lunarCard: {
+    padding: 14,
+    borderRadius: 14,
+    backgroundColor: 'rgba(255, 255, 255, 0.05)',
+    borderWidth: 1,
+    borderColor: 'rgba(255, 215, 0, 0.18)',
+  },
+  lunarCardHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+  lunarCardTitle: {
+    fontSize: 16,
+    fontWeight: '700',
+    color: colors.cream,
+  },
+  lunarCardDate: {
+    marginTop: 4,
+    fontSize: 12,
+    color: colors.saffronLight,
+  },
+  lunarTimingLabel: {
+    marginTop: 8,
+    fontSize: 11,
+    fontWeight: '700',
+    color: colors.creamMuted,
+    textTransform: 'uppercase',
+    letterSpacing: 0.7,
+  },
+  lunarTimingValue: {
+    marginTop: 2,
+    fontSize: 14,
+    fontWeight: '600',
+    color: colors.cream,
+  },
+  lunarCardDescription: {
+    marginTop: 6,
+    fontSize: 13,
+    lineHeight: 19,
+    color: colors.creamMuted,
   },
   section: { marginBottom: 20, gap: 10 },
   sectionTitle: { fontSize: 18, fontWeight: '700', color: colors.gold, marginBottom: 4 },

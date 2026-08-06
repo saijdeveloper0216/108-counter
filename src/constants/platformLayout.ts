@@ -26,38 +26,103 @@ export const platformLayout = {
   jaapRingMaxSize: Platform.select({ android: 268, ios: 280, default: 280 }) as number,
 };
 
-/** 108 Mala — includes mala card, stats, tap button, and tab bar. */
-const COUNTER_CHROME_HEIGHT = Platform.select({ android: 438, ios: 418, default: 428 }) as number;
+/** Glow extends beyond the tap target — reserve this in height math. */
+export const RING_AURA_OVERFLOW = 28;
+
+/** Counter screen top padding inside SafeAreaView. */
+export const COUNTER_ROOT_TOP_PADDING = Platform.select({ android: 8, ios: 12, default: 10 }) as number;
+
+/** 108 Mala — header, toggle, mala card, stats, tap button, actions, tab bar. */
+const COUNTER_CHROME_HEIGHT = Platform.select({ android: 492, ios: 468, default: 478 }) as number;
 
 /** Naam jaap — header, toggle, total bar, circle, tap button, actions, tab bar. */
-const JAAP_CHROME_HEIGHT = Platform.select({ android: 400, ios: 382, default: 392 }) as number;
+const JAAP_CHROME_HEIGHT = Platform.select({ android: 448, ios: 428, default: 438 }) as number;
 
-function computeRingSize(windowWidth: number, windowHeight: number, chromeHeight: number, maxSize: number) {
+export type RingLayoutContext = {
+  tabBarHeight?: number;
+  topInset?: number;
+};
+
+function resolveContentHeight(windowHeight: number, layout?: RingLayoutContext) {
+  const tabBar = layout?.tabBarHeight ?? 0;
+  const topInset = layout?.topInset ?? 0;
+  return windowHeight - tabBar - topInset - COUNTER_ROOT_TOP_PADDING;
+}
+
+function scaledRingMax(baseMax: number, contentHeight: number) {
+  if (contentHeight < 720) {
+    return Math.min(baseMax, 208);
+  }
+  if (contentHeight < 760) {
+    return Math.min(baseMax, 224);
+  }
+  if (contentHeight < 820) {
+    return Math.min(baseMax, 238);
+  }
+  return baseMax;
+}
+
+function computeRingSize(
+  windowWidth: number,
+  windowHeight: number,
+  chromeHeight: number,
+  maxSize: number,
+  layout?: RingLayoutContext,
+) {
+  const contentHeight = resolveContentHeight(windowHeight, layout);
+  const cappedMax = scaledRingMax(maxSize, contentHeight);
   const byWidth = windowWidth - platformLayout.counterRingWidthInset;
-  const byHeight = windowHeight - chromeHeight;
-  let size = Math.floor(Math.max(160, Math.min(byWidth, byHeight, maxSize)));
+  const byHeight = contentHeight - chromeHeight - RING_AURA_OVERFLOW;
+  let size = Math.floor(Math.max(160, Math.min(byWidth, byHeight, cappedMax)));
   if (Platform.OS === 'android') {
     size = Math.max(160, size - platformLayout.counterRingAndroidTrim);
   }
   return size;
 }
 
+/** Never let the ring exceed the flex space allocated to mainStage. */
+export function fitRingToStageHeight(
+  ringSize: number,
+  stageHeight: number,
+  {
+    statsGap,
+    tapGap,
+    auraOverflow = RING_AURA_OVERFLOW,
+  }: { statsGap: number; tapGap: number; auraOverflow?: number },
+): number {
+  if (stageHeight <= 0) {
+    return ringSize;
+  }
+  const maxInStage = stageHeight - statsGap - tapGap - auraOverflow;
+  return Math.max(160, Math.min(ringSize, Math.floor(maxInStage)));
+}
+
 /** Ring size: wide as the reference, but capped so buttons stay on one screen. */
-export function computeCounterRingSize(windowWidth: number, windowHeight: number): number {
+export function computeCounterRingSize(
+  windowWidth: number,
+  windowHeight: number,
+  layout?: RingLayoutContext,
+): number {
   return computeRingSize(
     windowWidth,
     windowHeight,
     COUNTER_CHROME_HEIGHT,
     platformLayout.counterRingMaxSize,
+    layout,
   );
 }
 
-export function computeJaapRingSize(windowWidth: number, windowHeight: number): number {
+export function computeJaapRingSize(
+  windowWidth: number,
+  windowHeight: number,
+  layout?: RingLayoutContext,
+): number {
   return computeRingSize(
     windowWidth,
     windowHeight,
     JAAP_CHROME_HEIGHT,
     platformLayout.jaapRingMaxSize,
+    layout,
   );
 }
 

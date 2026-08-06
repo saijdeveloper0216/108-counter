@@ -2,8 +2,10 @@ import type { CalendarLocale, Region, UsaTimezone } from '../../types/content';
 import { USA_TIMEZONE_LABELS } from '../../types/content';
 import { ALL_INDIA_FESTIVALS, ALL_USA_FESTIVALS } from './display';
 import {
+  getCalendarMarks,
   getFestivalViewsForRegion,
   getFestivalsForRegion,
+  getLunarLabel,
   getMarkedDates,
   getUpcomingFestivals,
 } from './display';
@@ -11,11 +13,20 @@ import {
 export {
   ALL_INDIA_FESTIVALS,
   ALL_USA_FESTIVALS,
+  getCalendarMarks,
   getFestivalViewsForRegion,
   getFestivalsForRegion,
+  getLunarLabel,
   getMarkedDates,
   getUpcomingFestivals,
 };
+
+export {
+  formatLunarTiming,
+  getLunarDayForDate,
+  getLunarDaysForMonth,
+  getLunarKindForDate,
+} from '../lunarDays';
 
 /** @deprecated Use ALL_INDIA_FESTIVALS */
 export const ALL_FESTIVALS = ALL_INDIA_FESTIVALS;

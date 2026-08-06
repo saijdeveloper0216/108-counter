@@ -1,6 +1,13 @@
 import type { CalendarLocale, Festival, FestivalView, Region } from '../../types/content';
+import { ALL_PURNIMA_DATES, ALL_AMAVASYA_DATES, getLunarKindForDate } from '../lunarDays';
 import { ALL_USA_FESTIVALS } from './usaYears';
 import { ALL_FESTIVALS as ALL_INDIA_FESTIVALS } from './years';
+
+export type CalendarDayMark = {
+  festival?: boolean;
+  lunar?: 'purnima' | 'amavasya';
+  selected?: boolean;
+};
 
 export { ALL_INDIA_FESTIVALS, ALL_USA_FESTIVALS };
 
@@ -52,8 +59,29 @@ export function getUpcomingFestivals(locale: CalendarLocale, region: Region, fro
 }
 
 export function getMarkedDates(festivals: Festival[] | FestivalView[]) {
-  return festivals.reduce<Record<string, { marked: boolean; dotColor: string }>>((acc, festival) => {
-    acc[festival.date] = { marked: true, dotColor: '#FFD700' };
-    return acc;
-  }, {});
+  return getCalendarMarks(festivals);
 }
+
+export function getCalendarMarks(festivals: Festival[] | FestivalView[]): Record<string, CalendarDayMark> {
+  const marks: Record<string, CalendarDayMark> = {};
+
+  for (const date of ALL_PURNIMA_DATES) {
+    marks[date] = { ...marks[date], lunar: 'purnima' };
+  }
+
+  for (const date of ALL_AMAVASYA_DATES) {
+    marks[date] = { ...marks[date], lunar: 'amavasya' };
+  }
+
+  for (const festival of festivals) {
+    marks[festival.date] = { ...marks[festival.date], festival: true };
+  }
+
+  return marks;
+}
+
+export function getLunarLabel(kind: 'purnima' | 'amavasya') {
+  return kind === 'purnima' ? 'Purnima (Full Moon)' : 'Amavasya (New Moon)';
+}
+
+export { getLunarKindForDate };

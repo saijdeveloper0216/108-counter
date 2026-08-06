@@ -1,6 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
-import { useEffect, useMemo } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   Modal,
   Platform,
@@ -9,7 +9,9 @@ import {
   Text,
   View,
   useWindowDimensions,
+  type LayoutChangeEvent,
 } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Animated, {
   Easing,
   useAnimatedStyle,
@@ -20,9 +22,16 @@ import Animated, {
 } from 'react-native-reanimated';
 import { MAX_JAAP_COUNT } from '../constants/counter';
 import { colors, copy, TOTAL_COUNT } from '../constants/theme';
-import { computeCounterRingSize, computeJaapRingSize, platformLayout } from '../constants/platformLayout';
+import {
+  computeCounterRingSize,
+  computeJaapRingSize,
+  COUNTER_ROOT_TOP_PADDING,
+  fitRingToStageHeight,
+  platformLayout,
+} from '../constants/platformLayout';
 import type { CounterMode } from '../types/counter';
 import { formatJaapTotalBar, jaapTotalBarFontSize } from '../utils/formatCount';
+import { useBottomTabLayout } from '../utils/layout';
 import { CounterModeToggle } from './CounterModeToggle';
 import { JaapMandalaGlass } from './JaapMandalaGlass';
 import { MalaRing, computeMalaMandalaSize } from './MalaRing';
@@ -67,10 +76,35 @@ export function CounterScreen({
 }: CounterScreenProps) {
   const isJaap = counterMode === 'jaap';
   const { width, height } = useWindowDimensions();
-  const ringSize = useMemo(
-    () => (isJaap ? computeJaapRingSize(width, height) : computeCounterRingSize(width, height)),
-    [width, height, isJaap],
+  const { tabBarHeight } = useBottomTabLayout();
+  const insets = useSafeAreaInsets();
+  const [mainStageHeight, setMainStageHeight] = useState(0);
+  const ringLayout = useMemo(
+    () => ({ tabBarHeight, topInset: insets.top }),
+    [tabBarHeight, insets.top],
   );
+  const statsGap = platformLayout.counterStatsRingGap;
+  const tapGap = isJaap ? platformLayout.jaapRingTapGap : platformLayout.counterRingTapGap;
+  const preferredRingSize = useMemo(
+    () =>
+      isJaap
+        ? computeJaapRingSize(width, height, ringLayout)
+        : computeCounterRingSize(width, height, ringLayout),
+    [width, height, isJaap, ringLayout],
+  );
+  const ringSize = useMemo(
+    () => fitRingToStageHeight(preferredRingSize, mainStageHeight, { statsGap, tapGap }),
+    [preferredRingSize, mainStageHeight, statsGap, tapGap],
+  );
+
+  useEffect(() => {
+    setMainStageHeight(0);
+  }, [isJaap]);
+
+  const handleMainStageLayout = useCallback((event: LayoutChangeEvent) => {
+    const nextHeight = event.nativeEvent.layout.height;
+    setMainStageHeight((current) => (Math.abs(current - nextHeight) > 1 ? nextHeight : current));
+  }, []);
   const malaBarProgress =
     completedMalas > 0 ? 1 : Math.max(0.06, count / 108);
   const jaapDisplay = formatJaapTotalBar(count);
@@ -78,7 +112,7 @@ export function CounterScreen({
   const jaapMandalaSize = ringSize;
   const malaMandalaSize = computeMalaMandalaSize(ringSize);
   const currentMalaNumber =
-    count >= TOTAL_COUNT && completedMalas > 0 ? completedMalas : completedMalas + 1;
+    count === 0 || count >= TOTAL_COUNT ? completedMalas : completedMalas + 1;
   const scale = useSharedValue(1);
   const glow = useSharedValue(0.4);
 
@@ -151,11 +185,12 @@ export function CounterScreen({
           </View>
 
           <View
+            onLayout={handleMainStageLayout}
             style={[
               styles.mainStage,
               {
-                paddingTop: platformLayout.counterStatsRingGap,
-                paddingBottom: platformLayout.counterRingTapGap,
+                paddingTop: statsGap,
+                paddingBottom: tapGap,
               },
             ]}
           >
@@ -312,11 +347,12 @@ export function CounterScreen({
           </View>
 
           <View
+            onLayout={handleMainStageLayout}
             style={[
               styles.mainStage,
               {
-                paddingTop: platformLayout.counterStatsRingGap,
-                paddingBottom: platformLayout.counterRingTapGap,
+                paddingTop: statsGap,
+                paddingBottom: tapGap,
               },
             ]}
           >
@@ -474,7 +510,7 @@ const styles = StyleSheet.create({
   root: {
     flex: 1,
     paddingHorizontal: platformLayout.screenHorizontalPadding,
-    paddingTop: Platform.OS === 'android' ? 8 : 12,
+    paddingTop: COUNTER_ROOT_TOP_PADDING,
   },
   contentShell: {
     flex: 1,
