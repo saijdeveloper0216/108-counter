@@ -42,7 +42,7 @@ export const USA_TIMEZONE_LABELS: Record<UsaTimezone, string> = {
 export type IndiaRegion = 'all' | 'north' | 'south' | 'east' | 'west';
 export type Region = IndiaRegion;
 
-export type ShlokaCategory = 'mantra' | 'chalisa' | 'harathi';
+export type ShlokaCategory = 'mantra' | 'chalisa' | 'harathi' | 'ashtakam' | 'stotra';
 
 export type ShlokaLanguages = Partial<Record<Language, string[]>>;
 
@@ -53,6 +53,8 @@ export type ShlokaEntry = {
   description: string;
   deity?: string;
   languages: Record<Language, string[]>;
+  sourceScript?: 'devanagari' | 'telugu';
+  group?: 'gods' | 'goddesses';
 };
 
 /** Shloka data before south-Indian language verses are merged in. */
@@ -64,12 +66,14 @@ export const SHLOKA_CATEGORY_LABELS: Record<ShlokaCategory, string> = {
   mantra: 'Mantras',
   chalisa: 'Chalisa',
   harathi: 'Harathi / Aarti',
+  ashtakam: 'Shiva Ashtakam',
+  stotra: 'Stotras & Namavali',
 };
 
 export const LANGUAGE_LABELS: Record<Language, string> = {
-  sanskrit: 'Sanskrit',
+  sanskrit: 'Devanagari',
   hindi: 'Hindi',
-  english: 'English',
+  english: 'English / Roman',
   telugu: 'Telugu',
   tamil: 'Tamil',
   kannada: 'Kannada',

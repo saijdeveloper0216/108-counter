@@ -1,67 +1,87 @@
-import Svg, { Circle, Defs, LinearGradient, Stop } from 'react-native-svg';
-import { TOTAL_COUNT, colors } from '../constants/theme';
+import { useEffect, useRef } from 'react';
+import { StyleSheet } from 'react-native';
+import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
+import Svg, { Circle, Defs, G, RadialGradient, Stop } from 'react-native-svg';
+import { TOTAL_COUNT } from '../constants/theme';
 
-type MalaRingProps = {
-  count: number;
-  size: number;
-};
+type MalaRingProps = { count: number; size: number; motionEnabled?: boolean };
 
-const BEAD_RADIUS_RATIO = 0.034;
-const OUTER_INSET_RATIO = 0.014;
-
-/** Center mandala diameter — leaves room for coin ring on the outer rim. */
 export function computeMalaMandalaSize(ringSize: number): number {
-  const beadRadius = ringSize * BEAD_RADIUS_RATIO;
-  const coinRingRadius = ringSize / 2 - beadRadius - ringSize * OUTER_INSET_RATIO;
-  const gap = ringSize * 0.022;
-  return Math.floor(2 * (coinRingRadius - beadRadius - gap));
+  return Math.floor(ringSize * 0.77);
 }
 
-export function MalaRing({ count, size }: MalaRingProps) {
+export function MalaRing({ count, size, motionEnabled = true }: MalaRingProps) {
   const center = size / 2;
-  const beadRadius = size * BEAD_RADIUS_RATIO;
-  const ringRadius = size / 2 - beadRadius - size * OUTER_INSET_RATIO;
-
-  const beads = Array.from({ length: TOTAL_COUNT }, (_, index) => {
-    const angle = (index / TOTAL_COUNT) * Math.PI * 2 - Math.PI / 2;
-    const x = center + ringRadius * Math.cos(angle);
-    const y = center + ringRadius * Math.sin(angle);
-    const filled = index < count;
-    return { x, y, filled, key: index };
-  });
-
+  const ringRadius = size * 0.447;
+  const beadRadius = size * 0.0105;
+  const angle = useSharedValue(0);
+  const previous = useRef(count);
+  useEffect(() => {
+    const target = Math.max(0, count - 1) * Math.PI * 2 / TOTAL_COUNT;
+    if (!motionEnabled || count === 0 || (previous.current === TOTAL_COUNT && count === 1)) angle.value = target;
+    else angle.value = withTiming(target, { duration: 150 });
+    previous.current = count;
+  }, [count, motionEnabled, angle]);
+  const activeStyle = useAnimatedStyle(() => ({
+    transform: [
+      { translateX: Math.sin(angle.value) * ringRadius },
+      { translateY: -Math.cos(angle.value) * ringRadius },
+    ],
+  }));
+  const activeSize = Math.max(15, size * 0.059);
   return (
-    <Svg width={size} height={size} style={{ position: 'absolute' }} pointerEvents="none">
-      <Defs>
-        <LinearGradient id="malaRingGlow" x1="0%" y1="0%" x2="100%" y2="100%">
-          <Stop offset="0%" stopColor={colors.saffron} stopOpacity="0.35" />
-          <Stop offset="100%" stopColor={colors.gold} stopOpacity="0.15" />
-        </LinearGradient>
-        <LinearGradient id="malaBeadFill" x1="0%" y1="0%" x2="100%" y2="100%">
-          <Stop offset="0%" stopColor="#fff4c2" />
-          <Stop offset="45%" stopColor={colors.beadActive} />
-          <Stop offset="100%" stopColor={colors.goldDark} />
-        </LinearGradient>
-      </Defs>
-      <Circle
-        cx={center}
-        cy={center}
-        r={ringRadius}
-        stroke="url(#malaRingGlow)"
-        strokeWidth={2}
-        fill="none"
-      />
-      {beads.map((bead) => (
-        <Circle
-          key={bead.key}
-          cx={bead.x}
-          cy={bead.y}
-          r={beadRadius}
-          fill={bead.filled ? 'url(#malaBeadFill)' : colors.beadInactive}
-          stroke={bead.filled ? colors.beadGlow : 'rgba(255, 215, 0, 0.12)'}
-          strokeWidth={bead.filled ? 1.5 : 1}
-        />
-      ))}
-    </Svg>
+    <>
+      <Svg width={size} height={size} style={StyleSheet.absoluteFill} pointerEvents="none">
+        <Defs>
+          <RadialGradient id="beadGold" cx="30%" cy="22%" rx="72%" ry="72%">
+            <Stop offset="0%" stopColor="#fff9dc" />
+            <Stop offset="33%" stopColor="#efc66b" />
+            <Stop offset="72%" stopColor="#b57530" />
+            <Stop offset="100%" stopColor="#563117" />
+          </RadialGradient>
+          <RadialGradient id="beadRest" cx="28%" cy="20%" rx="75%" ry="75%">
+            <Stop offset="0%" stopColor="#a77a47" />
+            <Stop offset="45%" stopColor="#60402b" />
+            <Stop offset="100%" stopColor="#291917" />
+          </RadialGradient>
+        </Defs>
+        <Circle cx={center} cy={center} r={ringRadius} stroke="#644422" strokeWidth={1} fill="none" />
+        <Circle cx={center} cy={center} r={size * 0.48} stroke="#e2ba68" strokeOpacity={0.12} strokeWidth={0.7} fill="none" />
+        {Array.from({ length: TOTAL_COUNT }, (_, i) => {
+          const radians = i / TOTAL_COUNT * Math.PI * 2 - Math.PI / 2;
+          const x = center + ringRadius * Math.cos(radians);
+          const y = center + ringRadius * Math.sin(radians);
+          const filled = i < count;
+          return (
+            <G key={i}>
+              <Circle cx={x + 0.6} cy={y + 1.2} r={beadRadius + 0.4} fill="#070405" opacity={0.7} />
+              <Circle cx={x} cy={y} r={beadRadius} fill={filled ? 'url(#beadGold)' : 'url(#beadRest)'} stroke={filled ? '#efcf89' : '#775332'} strokeWidth={0.45} />
+            </G>
+          );
+        })}
+      </Svg>
+      {count > 0 && (
+        <Animated.View pointerEvents="none" style={[
+          styles.active, { width: activeSize, height: activeSize, borderRadius: activeSize / 2,
+            left: center - activeSize / 2, top: center - activeSize / 2 }, activeStyle,
+        ]}>
+          <Svg width={activeSize} height={activeSize}>
+            <Defs>
+              <RadialGradient id="focusBead" cx="28%" cy="23%" rx="75%" ry="75%">
+                <Stop offset="0%" stopColor="#fffce9" />
+                <Stop offset="25%" stopColor="#fbe3a3" />
+                <Stop offset="60%" stopColor="#c58b3f" />
+                <Stop offset="100%" stopColor="#5f3616" />
+              </RadialGradient>
+            </Defs>
+            <Circle cx={activeSize / 2} cy={activeSize / 2} r={activeSize / 2 - 1} fill="url(#focusBead)" stroke="#ffdd8d" strokeWidth={1} />
+          </Svg>
+        </Animated.View>
+      )}
+    </>
   );
 }
+const styles = StyleSheet.create({
+  active: { position: 'absolute', shadowColor: '#f9c76d', shadowOpacity: 0.8, shadowRadius: 12,
+    shadowOffset: { width: 0, height: 2 }, elevation: 5 },
+});

@@ -4,7 +4,7 @@ import { Platform } from 'react-native';
 import { addDays, formatFestivalDate, formatTimeLabel, getUpcomingFestivals } from '../data/festivals';
 import type { AppSettings } from '../types/settings';
 
-Notifications.setNotificationHandler({
+if (Platform.OS !== 'web') Notifications.setNotificationHandler({
   handleNotification: async () => ({
     shouldShowBanner: true,
     shouldShowList: true,
@@ -40,11 +40,14 @@ async function ensureAndroidNotificationChannel() {
 }
 
 export async function getNotificationPermissionStatus() {
+  if (Platform.OS === 'web') return 'undetermined' as const;
   const settings = await Notifications.getPermissionsAsync();
   return settings.status;
 }
 
 export async function requestNotificationPermission() {
+  if (Platform.OS === 'web') return false;
+  await ensureAndroidNotificationChannel();
   const current = await Notifications.getPermissionsAsync();
   if (current.status !== 'granted') {
     const requested = await Notifications.requestPermissionsAsync();
@@ -67,12 +70,14 @@ async function loadScheduledIds() {
 }
 
 export async function cancelFestivalReminders() {
+  if (Platform.OS === 'web') return;
   const ids = await loadScheduledIds();
   await Promise.all(ids.map((id) => Notifications.cancelScheduledNotificationAsync(id)));
   await saveScheduledIds([]);
 }
 
 export async function scheduleFestivalReminders(settings: AppSettings) {
+  if (Platform.OS === 'web') return { scheduled: 0 };
   await cancelFestivalReminders();
 
   if (!settings.remindersEnabled) {
@@ -119,4 +124,36 @@ export async function scheduleFestivalReminders(settings: AppSettings) {
 
   await saveScheduledIds(ids);
   return { scheduled: ids.length };
+}
+
+
+const PRACTICE_REMINDER_ID = '108counter-daily-practice';
+const PRACTICE_CHANNEL_ID = 'daily-practice';
+
+/** Independent repeating reminder; never cancels the user's festival reminders. */
+export async function schedulePracticeReminder(settings: AppSettings) {
+  if (Platform.OS === 'web') return { scheduled: 0 };
+  await Notifications.cancelScheduledNotificationAsync(PRACTICE_REMINDER_ID);
+  if (!settings.practiceReminderEnabled) return { scheduled: 0 };
+  if (!await requestNotificationPermission()) return { scheduled: 0, permissionDenied: true };
+  if (Platform.OS === 'android') {
+    await Notifications.setNotificationChannelAsync(PRACTICE_CHANNEL_ID, {
+      name: 'Daily Chanting', importance: Notifications.AndroidImportance.DEFAULT, sound: 'default',
+    });
+  }
+  const { hours, minutes } = parseTime(settings.practiceReminderTime);
+  await Notifications.scheduleNotificationAsync({
+    identifier: PRACTICE_REMINDER_ID,
+    content: {
+      title: 'A moment for your daily sadhana',
+      body: `Your intention: ${settings.dailyMalaGoal} mala${settings.dailyMalaGoal === 1 ? '' : 's'}. Begin with one peaceful chant.`,
+      data: { type: 'daily-practice' },
+    },
+    trigger: {
+      type: Notifications.SchedulableTriggerInputTypes.DAILY,
+      hour: hours, minute: minutes,
+      channelId: Platform.OS === 'android' ? PRACTICE_CHANNEL_ID : undefined,
+    },
+  });
+  return { scheduled: 1 };
 }

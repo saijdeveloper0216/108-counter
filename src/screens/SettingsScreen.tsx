@@ -28,6 +28,7 @@ import { CALENDAR_LOCALE_LABELS } from '../types/content';
 import { copy } from '../constants/theme';
 import type { CounterMode } from '../types/counter';
 import { VIBRATION_LABELS, FESTIVAL_REMINDER_TIMING_LABELS, type FestivalReminderTiming, type VibrationIntensity } from '../types/settings';
+import { confirmAction } from '../utils/confirmAction';
 import { triggerSelectionHaptic } from '../utils/haptics';
 import { useBottomTabLayout } from '../utils/layout';
 
@@ -147,9 +148,49 @@ export function SettingsScreen() {
       >
         <ScreenHeader
           title="Settings"
-          subtitle="Festival reminders & vibration"
+          subtitle="Daily practice, reminders & motion"
           icon="settings-outline"
         />
+
+        <View style={styles.card}>
+          <Text style={styles.cardTitle}>Daily Practice</Text>
+          <Text style={styles.cardDescription}>Set a gentle intention. Completed malas in either counting mode contribute to your goal.</Text>
+          <Text style={styles.pickerLabel}>Daily mala goal</Text>
+          <View style={styles.intensityRow}>
+            {[1, 3, 5, 11].map((goal) => (
+              <Pressable key={goal} accessibilityRole="button" accessibilityLabel={`Daily goal ${goal} malas`}
+                accessibilityState={{ selected: settings.dailyMalaGoal === goal }}
+                onPress={() => void applySettings({ dailyMalaGoal: goal })}
+                style={[styles.intensityChip, settings.dailyMalaGoal === goal && styles.intensityChipActive]}>
+                <Text style={[styles.intensityText, settings.dailyMalaGoal === goal && styles.intensityTextActive]}>{goal} mala{goal === 1 ? '' : 's'}</Text>
+              </Pressable>
+            ))}
+          </View>
+          <View style={styles.switchRow}>
+            <Text style={styles.rowLabel}>Daily chanting reminder</Text>
+            <Switch accessibilityLabel="Daily chanting reminder" value={settings.practiceReminderEnabled}
+              disabled={Platform.OS === 'web'} trackColor={{ false: '#5c0a0a', true: colors.saffron }}
+              onValueChange={(enabled) => {
+                void (async () => {
+                  if (enabled && !await requestNotificationPermission()) {
+                    Alert.alert('Notifications required', 'Allow notifications in system settings to receive your daily chanting reminder.');
+                    return;
+                  }
+                  await applySettings({ practiceReminderEnabled: enabled });
+                })().catch(() => Alert.alert('Reminder unavailable', 'Please try setting your reminder again.'));
+              }} />
+          </View>
+          {settings.practiceReminderEnabled && <TimePickerRow label="Chanting time" value={settings.practiceReminderTime}
+            onChange={(practiceReminderTime) => void applySettings({ practiceReminderTime })} />}
+          {Platform.OS === 'web' && <Text style={styles.helperText}>Test notifications on an Android or iPhone device.</Text>}
+          <View style={styles.switchRow}>
+            <Text style={styles.rowLabel}>Animated interactions</Text>
+            <Switch accessibilityLabel="Animated interactions" value={settings.animationsEnabled}
+              trackColor={{ false: '#5c0a0a', true: colors.saffron }}
+              onValueChange={(animationsEnabled) => void applySettings({ animationsEnabled })} />
+          </View>
+          <Text style={styles.helperText}>Motion respects your device's reduced-motion setting. Ambient glow pauses when you leave the counter.</Text>
+        </View>
 
         <View style={styles.card}>
           <Text style={styles.cardTitle}>Festival Reminders</Text>
@@ -246,15 +287,9 @@ export function SettingsScreen() {
                 onPress={() => {
                   void triggerSelectionHaptic();
                   if (mode !== settings.counterMode) {
-                    Alert.alert(copy.switchModeTitle, copy.switchModeMessage, [
-                      { text: 'Cancel', style: 'cancel' },
-                      {
-                        text: 'Switch',
-                        onPress: () => {
-                          void applySettings({ counterMode: mode });
-                        },
-                      },
-                    ]);
+                    confirmAction(copy.switchModeTitle, copy.switchModeMessage, 'Switch', () => {
+                      void applySettings({ counterMode: mode });
+                    });
                   }
                 }}
                 style={[

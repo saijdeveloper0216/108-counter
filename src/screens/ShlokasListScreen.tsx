@@ -1,7 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import { useFocusEffect, useNavigationState } from '@react-navigation/native';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Platform, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Platform, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { allShlokas, shlokasByCategory } from '../data/shlokas';
@@ -16,16 +16,19 @@ import { useBottomTabLayout } from '../utils/layout';
 
 type Props = NativeStackScreenProps<ShlokasStackParamList, 'ShlokasList'>;
 
-const CATEGORIES: ShlokaCategory[] = ['harathi', 'mantra', 'chalisa'];
+const CATEGORIES: ShlokaCategory[] = ['harathi', 'mantra', 'chalisa', 'ashtakam', 'stotra'];
 
 const CATEGORY_ICONS: Record<ShlokaCategory, keyof typeof Ionicons.glyphMap> = {
   harathi: 'flame-outline',
   mantra: 'infinite-outline',
   chalisa: 'book-outline',
+  ashtakam: 'flower-outline',
+  stotra: 'reader-outline',
 };
 
 export function ShlokasListScreen({ navigation }: Props) {
   const { scrollBottomPadding } = useBottomTabLayout();
+  const [query, setQuery] = useState('');
   const [activeCategory, setActiveCategory] = useState<ShlokaCategory | 'all'>('all');
   const [coverForTransition, setCoverForTransition] = useState(false);
   const scrollRef = useRef<ScrollView>(null);
@@ -62,11 +65,10 @@ export function ShlokasListScreen({ navigation }: Props) {
   }, []);
 
   const filtered = useMemo(() => {
-    if (activeCategory === 'all') {
-      return allShlokas;
-    }
-    return shlokasByCategory[activeCategory];
-  }, [activeCategory]);
+    const entries = activeCategory === 'all' ? allShlokas : shlokasByCategory[activeCategory];
+    const words = query.trim().toLowerCase().split(/\s+/);
+    return entries.filter(s => words.every(word => `${s.title} ${s.deity ?? ''}`.toLowerCase().includes(word)));
+  }, [activeCategory, query]);
 
   if (hideListContent) {
     return (
@@ -113,9 +115,21 @@ export function ShlokasListScreen({ navigation }: Props) {
           ))}
         </ScrollView>
 
+        <TextInput
+          value={query}
+          onChangeText={setQuery}
+          placeholder="Search a prayer or deity"
+          placeholderTextColor={colors.creamMuted}
+          accessibilityLabel="Search prayers"
+          autoCorrect={false}
+          style={styles.search}
+        />
+        <Text style={styles.results}>{filtered.length} readings · choose your reading script inside</Text>
+        {filtered.length === 0 && <Text style={styles.results}>No matching prayers.</Text>}
         {filtered.map((shloka) => (
           <Pressable
             key={shloka.id}
+            accessibilityLabel={shloka.title}
             accessibilityRole="button"
             onPress={() => {
               void triggerSelectionHaptic();
@@ -168,6 +182,7 @@ function FilterChip({
   return (
     <Pressable
       accessibilityRole="button"
+      accessibilityLabel={label}
       accessibilityState={{ selected }}
       onPress={onPress}
       style={[styles.filterChip, selected && styles.filterChipActive]}
@@ -179,6 +194,8 @@ function FilterChip({
 }
 
 const styles = StyleSheet.create({
+  search: { color: colors.cream, fontSize: 16, padding: 14, borderWidth: 1, borderColor: colors.gold, borderRadius: 14, marginBottom: 12 },
+  results: { color: colors.creamMuted, fontSize: 12, marginBottom: 16 },
   container: { flex: 1, backgroundColor: colors.backgroundTop },
   safeArea: { flex: 1, backgroundColor: colors.backgroundTop },
   content: { padding: 20 },

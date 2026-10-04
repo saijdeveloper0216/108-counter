@@ -1,0 +1,58 @@
+[
+  {
+    "id": "hanuman-chalisa",
+    "title": "Hanuman Chalisa",
+    "category": "chalisa",
+    "deity": "Hanuman",
+    "group": "gods",
+    "description": "Forty verses by Tulsidas praising Hanuman — courage, wisdom and Ram bhakti.",
+    "sourceUrl": "https://www.drikpanchang.com/lyrics/chalisa/lord-hanuman/shree-hanuman-chalisa.html?lang=hi"
+  },
+  {
+    "id": "bajrang-baan",
+    "title": "Shri Bajrang Baan",
+    "category": "chalisa",
+    "deity": "Bajrang Baan",
+    "group": "gods",
+    "description": "A heartfelt prayer to Hanuman for strength, protection and steadfast devotion to Rama.",
+    "sourceUrl": "https://www.drikpanchang.com/lyrics/chalisa/lord-hanuman/bajarang-baan/shri-bajarang-baan.html?lang=hi"
+  },
+  {
+    "id": "ganesha-chalisa",
+    "title": "Ganesha Chalisa",
+    "category": "chalisa",
+    "deity": "Ganesha",
+    "group": "gods",
+    "description": "Forty verses praising Ganesha — wisdom, auspicious beginnings and the removal of obstacles.",
+    "sourceUrl": "https://www.drikpanchang.com/lyrics/chalisa/lord-ganesha/shree-ganesha-chalisa.html?lang=hi"
+  },
+  {
+    "id": "shiva-chalisa",
+    "title": "Shiva Chalisa",
+    "category": "chalisa",
+    "deity": "Shiva",
+    "group": "gods",
+    "description": "Forty verses praising Shiva — compassion, inner peace and devotion to Mahadeva.",
+    "sourceUrl": "https://www.drikpanchang.com/lyrics/chalisa/lord-shiva/shiva-chalisa.html?lang=hi"
+  },
+  {
+    "id": "navagraha-chalisa",
+    "title": "Navagraha Chalisa",
+    "category": "chalisa",
+    "deity": "Navagraha",
+    "group": "gods",
+    "description": "A devotional hymn honouring the nine grahas and seeking their auspicious blessings.",
+    "sourceScript": "telugu",
+    "supplied": true
+  },
+  {
+    "id": "durga-chalisa",
+    "title": "Durga Chalisa",
+    "category": "chalisa",
+    "deity": "Goddess Durga",
+    "group": "goddesses",
+    "description": "Forty verses praising Durga — courage, compassion and the protective power of the Divine Mother.",
+    "sourceScript": "telugu",
+    "supplied": true
+  }
+]

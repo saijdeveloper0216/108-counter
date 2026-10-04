@@ -3,6 +3,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Platform, StyleSheet, Text } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { TempleIcon } from '../components/DevotionalIcons';
 import { colors } from '../constants/theme';
 import { ANDROID_MIN_BOTTOM_INSET, platformLayout } from '../constants/platformLayout';
 import { CalendarScreen } from '../screens/CalendarScreen';
@@ -45,8 +46,8 @@ export function AppTabs() {
         tabBarInactiveTintColor: colors.creamMuted,
         tabBarBackground: () => <TabBackground />,
         tabBarStyle: {
-          backgroundColor: Platform.OS === 'android' ? 'rgba(26, 5, 5, 0.92)' : 'transparent',
-          borderTopWidth: Platform.OS === 'android' ? 1 : 0,
+          backgroundColor: Platform.OS === 'android' ? '#240303' : '#240303',
+          borderTopWidth: 1,
           borderTopColor: 'rgba(255, 215, 0, 0.12)',
           elevation: Platform.OS === 'android' ? 12 : 0,
           shadowOpacity: 0,
@@ -63,9 +64,9 @@ export function AppTabs() {
         name="Counter"
         component={CounterTabScreen}
         options={{
-          tabBarLabel: 'Counter',
+          tabBarLabel: ({ color, focused }) => <Text style={[styles.tabBarLabel, { color, borderBottomWidth: focused ? 2 : 0, borderBottomColor: '#ecc36e', paddingBottom: 3 }]}>Counter</Text>,
           tabBarIcon: ({ color, focused }) => (
-            <Text style={[styles.omTabIcon, { color, fontSize: focused ? 24 : 22 }]}>ॐ</Text>
+            <TempleIcon color={color} size={focused ? 27 : 25} />
           ),
         }}
       />
@@ -115,7 +116,7 @@ export function AppTabs() {
 const styles = StyleSheet.create({
   tabBarLabel: {
     fontSize: platformLayout.tabBarLabelSize,
-    fontWeight: '600',
+    fontFamily: 'DisplaySerif',
     marginTop: Platform.OS === 'android' ? 0 : 2,
     marginBottom: Platform.OS === 'android' ? 4 : 0,
     includeFontPadding: false,
@@ -127,6 +128,7 @@ const styles = StyleSheet.create({
     marginBottom: Platform.OS === 'android' ? -2 : 0,
   },
   omTabIcon: {
+    fontFamily: 'Devotional',
     fontWeight: '700',
     lineHeight: Platform.OS === 'android' ? 28 : 26,
     includeFontPadding: false,

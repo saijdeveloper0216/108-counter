@@ -66,12 +66,12 @@ export function getCalendarHeaderSubtitle(locale: CalendarLocale, usaTimezone: U
 }
 
 export function formatFestivalDate(date: string, timeZone?: string) {
-  return new Date(`${date}T12:00:00`).toLocaleDateString(undefined, {
+  return new Date(`${date}T12:00:00Z`).toLocaleDateString(undefined, {
     weekday: 'short',
     day: 'numeric',
     month: 'long',
     year: 'numeric',
-    ...(timeZone ? { timeZone } : {}),
+    timeZone: 'UTC',
   });
 }
 
@@ -83,8 +83,8 @@ export function formatTimeLabel(time: string) {
 }
 
 export function addDays(dateString: string, days: number) {
-  const date = new Date(`${dateString}T12:00:00`);
-  date.setDate(date.getDate() + days);
+  const date = new Date(`${dateString}T12:00:00Z`);
+  date.setUTCDate(date.getUTCDate() + days);
   return date.toISOString().slice(0, 10);
 }
 
@@ -102,7 +102,7 @@ export function resolveUsaTimezone(deviceTimezone: string): UsaTimezone {
 }
 
 export function getActiveTimezone(locale: CalendarLocale, usaTimezone: UsaTimezone) {
-  return locale === 'usa' ? usaTimezone : undefined;
+  return locale === 'usa' ? usaTimezone : 'Asia/Kolkata';
 }
 
 export type { Region };

@@ -1,0 +1,19 @@
+<!doctype html>
+<html>
+<head><meta charset="utf-8">
+<style>
+  html,body{margin:0;padding:0;background:#fff}
+  iframe{border:0;width:794px;height:1123px;display:block}
+</style>
+</head>
+<body>
+<iframe id="f" src="../build.html"></iframe>
+<script>
+  const y = parseInt(location.hash.replace('#','')) || 0;
+  const f = document.getElementById('f');
+  f.addEventListener('load', () => {
+    setTimeout(() => f.contentWindow.scrollTo(0, y), 200);
+  });
+</script>
+</body>
+</html>

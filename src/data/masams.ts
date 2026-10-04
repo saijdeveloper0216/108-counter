@@ -1,87 +1,87 @@
+import transitions from './masamTransitions.json';
+
 export type MasamPeriod = {
   id: string;
   name: string;
+  baseName: string;
   teluguName: string;
   startDate: string;
   endDate: string;
+  startAt: string;
+  endAt: string;
+  adhika: boolean;
 };
 
-export const MASAM_PERIODS: MasamPeriod[] = [
-  { id: '2025-chaitra', name: 'Chaitra Masam', teluguName: 'చైత్ర మాసం', startDate: '2025-03-30', endDate: '2025-04-28' },
-  { id: '2025-vaishakha', name: 'Vaishakha Masam', teluguName: 'వైశాఖ మాసం', startDate: '2025-04-29', endDate: '2025-05-28' },
-  { id: '2025-jyeshtha', name: 'Jyeshtha Masam', teluguName: 'జ్యేష్ఠ మాసం', startDate: '2025-05-29', endDate: '2025-06-27' },
-  { id: '2025-ashadha', name: 'Ashadha Masam', teluguName: 'ఆషాఢ మాసం', startDate: '2025-06-28', endDate: '2025-07-27' },
-  { id: '2025-shravana', name: 'Shravana Masam', teluguName: 'శ్రావణ మాసం', startDate: '2025-07-28', endDate: '2025-08-26' },
-  { id: '2025-bhadrapada', name: 'Bhadrapada Masam', teluguName: 'భాద్రపద మాసం', startDate: '2025-08-27', endDate: '2025-09-25' },
-  { id: '2025-ashwin', name: 'Ashwin Masam', teluguName: 'ఆశ్వయుజ మాసం', startDate: '2025-09-26', endDate: '2025-10-25' },
-  { id: '2025-kartika', name: 'Kartika Masam', teluguName: 'కార్తీక మాసం', startDate: '2025-10-26', endDate: '2025-11-24' },
-  { id: '2025-margashirsha', name: 'Margashirsha Masam', teluguName: 'మార్గశిర మాసం', startDate: '2025-11-25', endDate: '2025-12-24' },
-  { id: '2025-pausha', name: 'Pausha Masam', teluguName: 'పుష్య మాసం', startDate: '2025-12-25', endDate: '2026-01-23' },
-  { id: '2026-magha', name: 'Magha Masam', teluguName: 'మాఘ మాసం', startDate: '2026-01-24', endDate: '2026-02-22' },
-  { id: '2026-phalguna', name: 'Phalguna Masam', teluguName: 'ఫాల్గుణ మాసం', startDate: '2026-02-23', endDate: '2026-03-29' },
-  { id: '2026-chaitra', name: 'Chaitra Masam', teluguName: 'చైత్ర మాసం', startDate: '2026-03-30', endDate: '2026-04-27' },
-  { id: '2026-vaishakha', name: 'Vaishakha Masam', teluguName: 'వైశాఖ మాసం', startDate: '2026-04-28', endDate: '2026-05-27' },
-  { id: '2026-jyeshtha', name: 'Jyeshtha Masam', teluguName: 'జ్యేష్ఠ మాసం', startDate: '2026-05-28', endDate: '2026-06-26' },
-  { id: '2026-ashadha', name: 'Ashadha Masam', teluguName: 'ఆషాఢ మాసం', startDate: '2026-06-27', endDate: '2026-07-26' },
-  { id: '2026-shravana', name: 'Shravana Masam', teluguName: 'శ్రావణ మాసం', startDate: '2026-07-27', endDate: '2026-08-25' },
-  { id: '2026-bhadrapada', name: 'Bhadrapada Masam', teluguName: 'భాద్రపద మాసం', startDate: '2026-08-26', endDate: '2026-09-24' },
-  { id: '2026-ashwin', name: 'Ashwin Masam', teluguName: 'ఆశ్వయుజ మాసం', startDate: '2026-09-25', endDate: '2026-10-24' },
-  { id: '2026-kartika', name: 'Kartika Masam', teluguName: 'కార్తీక మాసం', startDate: '2026-10-25', endDate: '2026-11-23' },
-  { id: '2026-margashirsha', name: 'Margashirsha Masam', teluguName: 'మార్గశిర మాసం', startDate: '2026-11-24', endDate: '2026-12-23' },
-  { id: '2026-pausha', name: 'Pausha Masam', teluguName: 'పుష్య మాసం', startDate: '2026-12-24', endDate: '2027-01-22' },
-  { id: '2027-magha', name: 'Magha Masam', teluguName: 'మాఘ మాసం', startDate: '2027-01-23', endDate: '2027-02-21' },
-  { id: '2027-phalguna', name: 'Phalguna Masam', teluguName: 'ఫాల్గుణ మాసం', startDate: '2027-02-22', endDate: '2027-03-28' },
-  { id: '2027-chaitra', name: 'Chaitra Masam', teluguName: 'చైత్ర మాసం', startDate: '2027-03-29', endDate: '2027-04-27' },
-  { id: '2027-vaishakha', name: 'Vaishakha Masam', teluguName: 'వైశాఖ మాసం', startDate: '2027-04-28', endDate: '2027-05-27' },
-  { id: '2027-jyeshtha', name: 'Jyeshtha Masam', teluguName: 'జ్యేష్ఠ మాసం', startDate: '2027-05-28', endDate: '2027-06-26' },
-  { id: '2027-ashadha', name: 'Ashadha Masam', teluguName: 'ఆషాఢ మాసం', startDate: '2027-06-27', endDate: '2027-07-26' },
-  { id: '2027-shravana', name: 'Shravana Masam', teluguName: 'శ్రావణ మాసం', startDate: '2027-07-27', endDate: '2027-08-25' },
-  { id: '2027-bhadrapada', name: 'Bhadrapada Masam', teluguName: 'భాద్రపద మాసం', startDate: '2027-08-26', endDate: '2027-09-24' },
-  { id: '2027-ashwin', name: 'Ashwin Masam', teluguName: 'ఆశ్వయుజ మాసం', startDate: '2027-09-25', endDate: '2027-10-24' },
-  { id: '2027-kartika', name: 'Kartika Masam', teluguName: 'కార్తీక మాసం', startDate: '2027-10-25', endDate: '2027-11-23' },
-  { id: '2027-margashirsha', name: 'Margashirsha Masam', teluguName: 'మార్గశిర మాసం', startDate: '2027-11-24', endDate: '2027-12-23' },
-  { id: '2027-pausha', name: 'Pausha Masam', teluguName: 'పుష్య మాసం', startDate: '2027-12-24', endDate: '2028-01-22' },
-];
-
-export function getMasamForDate(date: string): MasamPeriod | undefined {
-  return MASAM_PERIODS.find((masam) => date >= masam.startDate && date <= masam.endDate);
+const TELUGU: Record<string, string> = {
+  Chaitra: 'చైత్ర', Vaishakha: 'వైశాఖ', Jyeshtha: 'జ్యేష్ఠ', Ashadha: 'ఆషాఢ',
+  Shravana: 'శ్రావణ', Bhadrapada: 'భాద్రపద', Ashwina: 'ఆశ్వయుజ', Kartika: 'కార్తీక',
+  Margashirsha: 'మార్గశిర', Pausha: 'పుష్య', Magha: 'మాఘ', Phalguna: 'ఫాల్గుణ',
+};
+const INDIA = 'Asia/Kolkata';
+const FIRST_DATE = '2025-01-01';
+const LAST_DATE = '2035-12-31';
+const formatters = new Map<string, Intl.DateTimeFormat>();
+function partsAt(instant: number, timeZone: string) {
+  let formatter = formatters.get(timeZone);
+  if (!formatter) {
+    formatter = new Intl.DateTimeFormat('en-CA', { timeZone, year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', hourCycle: 'h23' });
+    formatters.set(timeZone, formatter);
+  }
+  return Object.fromEntries(formatter.formatToParts(new Date(instant)).map(p => [p.type, p.value]));
 }
-
-export function getMasamsForMonth(monthKey: string): MasamPeriod[] {
+/** Resolve a civil date at noon in the selected region, including US daylight saving. */
+export function zonedNoon(date: string, timeZone = INDIA): number {
+  const desired = Date.parse(`${date}T12:00:00Z`);
+  let instant = desired;
+  for (let i = 0; i < 3; i++) {
+    const p = partsAt(instant, timeZone);
+    const local = Date.parse(`${p.year}-${p.month}-${p.day}T${p.hour}:${p.minute}:${p.second}Z`);
+    instant += desired - local;
+  }
+  return instant;
+}
+function shiftDate(date: string, days: number) {
+  return new Date(Date.parse(`${date}T12:00:00Z`) + days * 86400000).toISOString().slice(0, 10);
+}
+function localDate(instant: number, timeZone: string) {
+  const p = partsAt(instant, timeZone);
+  return `${p.year}-${p.month}-${p.day}`;
+}
+function periodAt(index: number, timeZone: string): MasamPeriod {
+  const t = transitions[index];
+  const start = Date.parse(t.startAt), end = Date.parse(t.endAt);
+  let startDate = localDate(start, timeZone), endDate = localDate(end, timeZone);
+  if (zonedNoon(startDate, timeZone) < start) startDate = shiftDate(startDate, 1);
+  if (zonedNoon(endDate, timeZone) >= end) endDate = shiftDate(endDate, -1);
+  const baseName = `${t.month === 'Ashwina' ? 'Ashwin' : t.month} Masam`;
+  return { id: `${t.startAt}-${t.month}`, name: `${t.adhika ? 'Adhika ' : ''}${baseName}`, baseName,
+    teluguName: `${t.adhika ? 'అధిక ' : ''}${TELUGU[t.month]} మాసం`, startDate, endDate,
+    startAt: t.startAt, endAt: t.endAt, adhika: t.adhika };
+}
+export const MASAM_PERIODS: MasamPeriod[] = transitions.map((_, i) => periodAt(i, INDIA));
+export function getMasamForDate(date: string, timeZone = INDIA): MasamPeriod | undefined {
+  if (date < FIRST_DATE || date > LAST_DATE || !/^\d{4}-\d{2}-\d{2}$/.test(date)) return undefined;
+  const noon = zonedNoon(date, timeZone);
+  const i = transitions.findIndex(t => noon >= Date.parse(t.startAt) && noon < Date.parse(t.endAt));
+  return i < 0 ? undefined : periodAt(i, timeZone);
+}
+export function getMasamsForMonth(monthKey: string, timeZone = INDIA): MasamPeriod[] {
+  if (!/^\d{4}-\d{2}$/.test(monthKey)) return [];
   const [year, month] = monthKey.split('-').map(Number);
-  const monthStart = `${monthKey}-01`;
-  const lastDay = new Date(year, month, 0).getDate();
-  const monthEnd = `${monthKey}-${String(lastDay).padStart(2, '0')}`;
-
-  return MASAM_PERIODS.filter(
-    (masam) => masam.startDate <= monthEnd && masam.endDate >= monthStart,
-  );
+  if (year < 2025 || year > 2035 || month < 1 || month > 12) return [];
+  const first = zonedNoon(`${monthKey}-01`, timeZone);
+  const last = zonedNoon(`${monthKey}-${new Date(Date.UTC(year, month, 0)).getUTCDate()}`, timeZone);
+  return transitions.flatMap((t, i) => Date.parse(t.startAt) <= last && Date.parse(t.endAt) > first ? [periodAt(i, timeZone)] : []);
 }
-
-export function getMasamMarkedDates(monthKey: string) {
-  const masams = getMasamsForMonth(monthKey);
-  const marks: Record<string, { customStyles?: { container?: object; text?: object } }> = {};
-
-  masams.forEach((masam, index) => {
-    const palette = ['rgba(255,153,51,0.12)', 'rgba(255,215,0,0.1)'];
-    const color = palette[index % palette.length];
-    const start = masam.startDate.slice(0, 7) === monthKey ? masam.startDate : `${monthKey}-01`;
-    const endDate = new Date(`${monthKey}-01T12:00:00`);
-    endDate.setMonth(endDate.getMonth() + 1);
-    endDate.setDate(0);
-    const monthEnd = endDate.toISOString().slice(0, 10);
-    const end = masam.endDate.slice(0, 7) === monthKey ? masam.endDate : monthEnd;
-
-    for (let cursor = new Date(`${start}T12:00:00`); cursor <= new Date(`${end}T12:00:00`); cursor.setDate(cursor.getDate() + 1)) {
-      const key = cursor.toISOString().slice(0, 10);
-      marks[key] = {
-        customStyles: {
-          container: { backgroundColor: color, borderRadius: 8 },
-          text: { color: '#FFF8E7', fontWeight: '600' },
-        },
-      };
+export function getMasamMarkedDates(monthKey: string, timeZone = INDIA) {
+  const marks: Record<string, { customStyles: { container: object; text: object } }> = {};
+  getMasamsForMonth(monthKey, timeZone).forEach((masam, i) => {
+    for (let date = masam.startDate; date <= masam.endDate; date = shiftDate(date, 1)) {
+      if (date.slice(0, 7) === monthKey) marks[date] = { customStyles: {
+        container: { backgroundColor: ['rgba(255,153,51,0.12)', 'rgba(255,215,0,0.1)'][i % 2], borderRadius: 8 },
+        text: { color: '#FFF8E7', fontWeight: '600' },
+      } };
     }
   });
-
   return marks;
 }

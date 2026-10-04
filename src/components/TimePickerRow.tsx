@@ -1,7 +1,7 @@
 import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
 import { Ionicons } from '@expo/vector-icons';
 import { useState } from 'react';
-import { Platform, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Platform, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 import { formatTimeLabel } from '../data/festivals';
 import { colors } from '../constants/theme';
 
@@ -38,14 +38,21 @@ export function TimePickerRow({ label, value, onChange }: TimePickerRowProps) {
   return (
     <View style={styles.row}>
       <Text style={styles.label}>{label}</Text>
-      <Pressable
+      {Platform.OS === 'web' ? (
+        <TextInput key={value} defaultValue={value} accessibilityLabel={label} placeholder="HH:MM"
+          style={[styles.button, styles.value]} maxLength={5}
+          onEndEditing={(event) => {
+            const time = event.nativeEvent.text;
+            if (/^([01]\d|2[0-3]):[0-5]\d$/.test(time)) onChange(time);
+          }} />
+      ) : <Pressable
         accessibilityRole="button"
         onPress={() => setOpen(true)}
         style={({ pressed }) => [styles.button, pressed && styles.pressed]}
       >
         <Ionicons name="time-outline" size={18} color={colors.gold} />
         <Text style={styles.value}>{formatTimeLabel(value)}</Text>
-      </Pressable>
+      </Pressable>}
       {open && (
         <DateTimePicker
           value={timeToDate(value)}

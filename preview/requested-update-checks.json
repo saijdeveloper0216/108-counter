@@ -1,0 +1,181 @@
+{
+  "checks": [
+    {
+      "viewport": "320x480",
+      "dock": {
+        "x": 16,
+        "y": 350,
+        "width": 288,
+        "height": 54
+      },
+      "tabs": {
+        "x": 0,
+        "y": 423,
+        "width": 80,
+        "height": 51
+      },
+      "overflows": []
+    },
+    {
+      "viewport": "320x568",
+      "dock": {
+        "x": 16,
+        "y": 438,
+        "width": 288,
+        "height": 54
+      },
+      "tabs": {
+        "x": 0,
+        "y": 511,
+        "width": 80,
+        "height": 51
+      },
+      "overflows": []
+    },
+    {
+      "viewport": "360x640",
+      "dock": {
+        "x": 20,
+        "y": 488,
+        "width": 320,
+        "height": 72
+      },
+      "tabs": {
+        "x": 0,
+        "y": 583,
+        "width": 90,
+        "height": 51
+      },
+      "overflows": []
+    },
+    {
+      "viewport": "390x844",
+      "dock": {
+        "x": 20,
+        "y": 692,
+        "width": 350,
+        "height": 72
+      },
+      "tabs": {
+        "x": 0,
+        "y": 787,
+        "width": 97.5,
+        "height": 51
+      },
+      "overflows": []
+    },
+    {
+      "viewport": "768x1024",
+      "dock": {
+        "x": 124,
+        "y": 872,
+        "width": 520,
+        "height": 72
+      },
+      "tabs": {
+        "x": 0,
+        "y": 967,
+        "width": 192,
+        "height": 51
+      },
+      "overflows": []
+    },
+    {
+      "suppliedReadings": [
+        {
+          "id": "manidweepa-varnanam",
+          "lines": 144,
+          "options": 7,
+          "offline": true
+        },
+        {
+          "id": "govinda-namavali",
+          "lines": 116,
+          "options": 7,
+          "offline": true
+        },
+        {
+          "id": "navagraha-chalisa",
+          "lines": 61,
+          "options": 7,
+          "offline": true
+        },
+        {
+          "id": "venkateswara-suprabhatam",
+          "lines": 112,
+          "options": 7,
+          "offline": true
+        },
+        {
+          "id": "durga-chalisa",
+          "lines": 42,
+          "options": 7,
+          "offline": true
+        },
+        {
+          "id": "annapurna-stotram",
+          "lines": 47,
+          "options": 7,
+          "offline": true
+        },
+        {
+          "id": "durga-aarti",
+          "lines": 49,
+          "options": 7,
+          "offline": true
+        },
+        {
+          "id": "shiva-panchakshari-stotram",
+          "lines": 24,
+          "options": 7,
+          "offline": true
+        },
+        {
+          "id": "sai-guruvara-aarti",
+          "lines": 19,
+          "options": 7,
+          "offline": true
+        },
+        {
+          "id": "sai-kakad-aarti",
+          "lines": 19,
+          "options": 7,
+          "offline": true
+        },
+        {
+          "id": "sai-dhoop-aarti",
+          "lines": 230,
+          "options": 7,
+          "offline": true
+        },
+        {
+          "id": "sai-shej-aarti",
+          "lines": 122,
+          "options": 7,
+          "offline": true
+        },
+        {
+          "id": "chandrasekhara-ashtakam",
+          "lines": 38,
+          "options": 7,
+          "offline": true
+        },
+        {
+          "id": "anjaneya-dandakam",
+          "lines": 54,
+          "options": 7,
+          "offline": true
+        },
+        {
+          "id": "navagraha-stotram",
+          "lines": 38,
+          "options": 7,
+          "offline": true
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "passed": true,
+  "nativeDeviceTested": false
+}

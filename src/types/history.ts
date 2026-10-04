@@ -1,6 +1,6 @@
 export type HistoryEntry = {
   id: string;
-  malaNumber: number;
+  malaNumber: number | string;
   completedAt: string;
 };
 

@@ -1,9 +1,9 @@
 export const colors = {
-  backgroundTop: '#1a0505',
-  backgroundBottom: '#3d1208',
+  backgroundTop: '#210405',
+  backgroundBottom: '#450e0c',
   saffron: '#FF9933',
   saffronLight: '#FFB366',
-  gold: '#FFD700',
+  gold: '#ecc36e',
   goldDark: '#C9A227',
   maroon: '#5c0a0a',
   cream: '#FFF8E7',
@@ -42,9 +42,9 @@ export const copy = {
   clearHistory: 'Clear History',
   counterModeTitle: 'Counting mode',
   counterModeMalaHint: 'One mala at a time — stops at 108 with celebration.',
-  counterModeJaapHint: 'Continuous naam jaap — keep tapping up to 10 crore.',
+  counterModeJaapHint: 'Continuous naam jaap — keep chanting with no fixed count limit.',
   modeMala: '108 Mala',
-  modeJaap: 'Naam jaap',
+  modeJaap: 'Naam Jaap',
   switchModeTitle: 'Switch counting mode?',
   switchModeMessage:
     'Each mode keeps its own count. Your progress in both modes is saved when you switch.',
@@ -54,8 +54,7 @@ export const copy = {
   jaapSubtitle: 'Mala · Mantra · Naam jaap',
   resetJaap: 'Reset jaap count',
   resetJaapConfirm: 'Reset your total naam jaap count to zero?',
-  jaapMaxReached: 'You have reached 10 crore. Reset to start again.',
   malaDailyResetTitle: 'Daily mala reset',
   malaDailyResetDescription:
-    'When on, bead count, completed malas, and history reset at the start of each day. When off, counts continue across days.',
+    'When on, the current bead count and mala total reset each day. Past mala history and practice streaks are kept.',
 };

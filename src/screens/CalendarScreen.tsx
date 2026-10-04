@@ -76,8 +76,8 @@ export function CalendarScreen() {
     () => getFestivalViewsForRegion(settings.calendarLocale, CALENDAR_REGION, festivals),
     [settings.calendarLocale, festivals],
   );
-  const selectedMasam = getMasamForDate(selectedDate);
-  const monthMasams = useMemo(() => getMasamsForMonth(visibleMonthKey), [visibleMonthKey]);
+  const selectedMasam = getMasamForDate(selectedDate, activeTimezone);
+  const monthMasams = useMemo(() => getMasamsForMonth(visibleMonthKey, activeTimezone), [visibleMonthKey, activeTimezone]);
 
   const markedDates = useMemo(() => {
     const marks = getCalendarMarks(festivals);
@@ -156,11 +156,12 @@ export function CalendarScreen() {
 
         {selectedMasam && (
           <View style={styles.masamBanner}>
-            <Text style={styles.masamLabel}>Current Masam</Text>
+            <Text style={styles.masamLabel}>Selected day · Telugu Amanta</Text>
             <Text style={styles.masamName}>{selectedMasam.name}</Text>
             <Text style={styles.masamTelugu}>{selectedMasam.teluguName}</Text>
+            <Text style={styles.masamDates}>Month at 12 noon · {timezoneLabel}</Text>
             <Text style={styles.masamSignificance}>
-              {getMasamSignificance(selectedMasam.name)}
+              {getMasamSignificance(selectedMasam.baseName)}
             </Text>
             <Text style={styles.masamDates}>
               {formatFestivalDate(selectedMasam.startDate, activeTimezone)} –{' '}
@@ -196,9 +197,10 @@ export function CalendarScreen() {
         </View>
 
         <View style={styles.section}>
+          <Text style={styles.emptyText}>Telugu Amanta months end at new moon. Purnimanta month names can differ. Dates below show the month at local noon, not festival or sunrise timings.</Text>
           <Text style={styles.sectionTitle}>Masams in {formatMonthLabel(visibleMonthKey)}</Text>
           {monthMasams.length === 0 ? (
-            <Text style={styles.emptyText}>No masam data for this month.</Text>
+            <Text style={styles.emptyText}>Amanta month data is available for 2025–2035.</Text>
           ) : (
             monthMasams.map((masam) => (
               <View key={masam.id} style={styles.masamCard}>
@@ -367,7 +369,7 @@ const styles = StyleSheet.create({
   },
   masamLabel: { fontSize: 12, color: colors.creamMuted, textTransform: 'uppercase', letterSpacing: 1 },
   masamName: { marginTop: 4, fontSize: 22, fontWeight: '800', color: colors.gold },
-  masamTelugu: { marginTop: 2, fontSize: 16, color: colors.saffronLight },
+  masamTelugu: { fontFamily: 'TeluguReading', marginTop: 2, fontSize: 16, color: colors.saffronLight },
   masamSignificance: {
     marginTop: 8,
     fontSize: 13,
@@ -474,7 +476,7 @@ const styles = StyleSheet.create({
     borderColor: 'rgba(255, 215, 0, 0.18)',
   },
   masamCardTitle: { fontSize: 16, fontWeight: '700', color: colors.cream },
-  masamCardTelugu: { marginTop: 2, fontSize: 14, color: colors.saffronLight },
+  masamCardTelugu: { fontFamily: 'TeluguReading', marginTop: 2, fontSize: 14, color: colors.saffronLight },
   masamCardDates: { marginTop: 6, fontSize: 12, color: colors.creamMuted },
   festivalCard: {
     padding: 14,

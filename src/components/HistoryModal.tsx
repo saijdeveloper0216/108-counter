@@ -5,6 +5,9 @@ import type { HistoryEntry } from '../types/history';
 
 type HistoryModalProps = {
   visible: boolean;
+  title?: string;
+  subtitle?: string;
+  onResetMalas?: () => void;
   history: HistoryEntry[];
   onClose: () => void;
   onClearHistory: () => void;
@@ -21,18 +24,19 @@ function formatDate(iso: string) {
   });
 }
 
-export function HistoryModal({ visible, history, onClose, onClearHistory }: HistoryModalProps) {
+export function HistoryModal({ visible, title = copy.historyTitle, subtitle, onResetMalas, history, onClose, onClearHistory }: HistoryModalProps) {
   return (
     <Modal visible={visible} transparent animationType="slide" onRequestClose={onClose}>
       <View style={styles.backdrop}>
         <View style={styles.card}>
           <View style={styles.header}>
-            <Text style={styles.title}>{copy.historyTitle}</Text>
+            <Text style={styles.title}>{title}</Text>
             <Pressable accessibilityRole="button" accessibilityLabel="Close history" onPress={onClose}>
               <Ionicons name="close" size={24} color={colors.cream} />
             </Pressable>
           </View>
 
+          {subtitle && <Text style={{ color: colors.creamMuted, marginBottom: 12 }}>{subtitle}</Text>}
           {history.length === 0 ? (
             <View style={styles.emptyState}>
               <Ionicons name="time-outline" size={40} color={colors.creamMuted} />
@@ -43,10 +47,10 @@ export function HistoryModal({ visible, history, onClose, onClearHistory }: Hist
               {history.map((entry) => (
                 <View key={entry.id} style={styles.row}>
                   <View style={styles.rowBadge}>
-                    <Text style={styles.rowBadgeText}>{entry.malaNumber}</Text>
+                    <Text numberOfLines={1} adjustsFontSizeToFit style={styles.rowBadgeText}>{entry.malaNumber}</Text>
                   </View>
                   <View style={styles.rowBody}>
-                    <Text style={styles.rowTitle}>
+                    <Text numberOfLines={2} style={styles.rowTitle}>
                       {copy.malaLabel} {entry.malaNumber}
                     </Text>
                     <Text style={styles.rowDate}>{formatDate(entry.completedAt)}</Text>
@@ -57,6 +61,7 @@ export function HistoryModal({ visible, history, onClose, onClearHistory }: Hist
             </ScrollView>
           )}
 
+          {onResetMalas && <Pressable accessibilityRole="button" accessibilityLabel="Reset completed malas" onPress={onResetMalas} style={styles.clearButton}><Text style={styles.clearButtonText}>Reset completed malas</Text></Pressable>}
           {history.length > 0 && (
             <Pressable
               accessibilityRole="button"

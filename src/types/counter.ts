@@ -9,8 +9,9 @@ export type MalaCounterState = {
 };
 
 export type JaapCounterState = {
-  totalCount: number;
-  completedMalas: number;
+  totalCount: string;
+  completedMalas: string;
+  history: HistoryEntry[];
 };
 
 export type PersistedCounters = {
@@ -27,6 +28,7 @@ export const EMPTY_MALA_STATE: MalaCounterState = {
 };
 
 export const EMPTY_JAAP_STATE: JaapCounterState = {
-  totalCount: 0,
-  completedMalas: 0,
+  totalCount: '0',
+  completedMalas: '0',
+  history: [],
 };

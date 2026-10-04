@@ -18,6 +18,10 @@ export type AppSettings = {
   counterMode: CounterMode;
   /** When true, 108 mala counts reset at the start of each local calendar day. */
   malaDailyReset: boolean;
+  dailyMalaGoal: number;
+  practiceReminderEnabled: boolean;
+  practiceReminderTime: string;
+  animationsEnabled: boolean;
 };
 
 export const DEFAULT_SETTINGS: AppSettings = {
@@ -30,6 +34,10 @@ export const DEFAULT_SETTINGS: AppSettings = {
   vibrationIntensity: 'balanced',
   counterMode: 'mala',
   malaDailyReset: false,
+  dailyMalaGoal: 1,
+  practiceReminderEnabled: false,
+  practiceReminderTime: '07:00',
+  animationsEnabled: true,
 };
 
 export const FESTIVAL_REMINDER_TIMING_LABELS: Record<FestivalReminderTiming, string> = {
@@ -64,5 +72,10 @@ export function sanitizeSettings(raw: Partial<AppSettings>): AppSettings {
     counterMode,
     reminderTiming,
     malaDailyReset,
+    dailyMalaGoal: [1, 3, 5, 11].includes(raw.dailyMalaGoal ?? 1) ? raw.dailyMalaGoal ?? 1 : 1,
+    practiceReminderEnabled: raw.practiceReminderEnabled === true,
+    practiceReminderTime: typeof raw.practiceReminderTime === 'string' && /^([01]\d|2[0-3]):[0-5]\d$/.test(raw.practiceReminderTime)
+      ? raw.practiceReminderTime : DEFAULT_SETTINGS.practiceReminderTime,
+    animationsEnabled: raw.animationsEnabled !== false,
   };
 }

@@ -1,0 +1,175 @@
+{
+  "checks": [
+    {
+      "viewport": "320x480",
+      "card": {
+        "x": 16,
+        "y": 155,
+        "width": 288,
+        "height": 103
+      },
+      "number": {
+        "x": 40,
+        "y": 183.21875,
+        "width": 240,
+        "height": 44.5
+      },
+      "dock": {
+        "x": 16,
+        "y": 342,
+        "width": 288,
+        "height": 62
+      },
+      "noScroll": true,
+      "fullEightDigits": true
+    },
+    {
+      "viewport": "320x568",
+      "card": {
+        "x": 16,
+        "y": 221,
+        "width": 288,
+        "height": 125
+      },
+      "number": {
+        "x": 40,
+        "y": 258.25,
+        "width": 240,
+        "height": 48
+      },
+      "dock": {
+        "x": 16,
+        "y": 430,
+        "width": 288,
+        "height": 62
+      },
+      "noScroll": true,
+      "fullEightDigits": true
+    },
+    {
+      "viewport": "360x640",
+      "card": {
+        "x": 20,
+        "y": 233,
+        "width": 320,
+        "height": 143
+      },
+      "number": {
+        "x": 44,
+        "y": 275.859375,
+        "width": 272,
+        "height": 54.40625
+      },
+      "dock": {
+        "x": 20,
+        "y": 482,
+        "width": 320,
+        "height": 78
+      },
+      "noScroll": true,
+      "fullEightDigits": true
+    },
+    {
+      "viewport": "360x800",
+      "card": {
+        "x": 20,
+        "y": 353,
+        "width": 320,
+        "height": 183
+      },
+      "number": {
+        "x": 44,
+        "y": 415.453125,
+        "width": 272,
+        "height": 54.40625
+      },
+      "dock": {
+        "x": 20,
+        "y": 642,
+        "width": 320,
+        "height": 78
+      },
+      "noScroll": true,
+      "fullEightDigits": true
+    },
+    {
+      "viewport": "393x873",
+      "card": {
+        "x": 20,
+        "y": 414,
+        "width": 353,
+        "height": 195
+      },
+      "number": {
+        "x": 44,
+        "y": 479.046875,
+        "width": 305,
+        "height": 61
+      },
+      "dock": {
+        "x": 20,
+        "y": 715,
+        "width": 353,
+        "height": 78
+      },
+      "noScroll": true,
+      "fullEightDigits": true
+    },
+    {
+      "viewport": "390x844",
+      "card": {
+        "x": 20,
+        "y": 386,
+        "width": 350,
+        "height": 194
+      },
+      "number": {
+        "x": 44,
+        "y": 450.859375,
+        "width": 302,
+        "height": 60.40625
+      },
+      "dock": {
+        "x": 20,
+        "y": 686,
+        "width": 350,
+        "height": 78
+      },
+      "noScroll": true,
+      "fullEightDigits": true
+    },
+    {
+      "viewport": "768x1024",
+      "card": {
+        "x": 124,
+        "y": 565,
+        "width": 520,
+        "height": 195
+      },
+      "number": {
+        "x": 148,
+        "y": 618.421875,
+        "width": 472,
+        "height": 84.234375
+      },
+      "dock": {
+        "x": 124,
+        "y": 866,
+        "width": 520,
+        "height": 78
+      },
+      "noScroll": true,
+      "fullEightDigits": true
+    }
+  ],
+  "errors": [],
+  "passed": true,
+  "nativeDeviceTested": false,
+  "legacyNumericMigration": true,
+  "exactHugeCountPersistence": true,
+  "bothModeLabelsVisible": true,
+  "fullMandalaSeparated": true,
+  "equalAlignedButtons": true,
+  "centeredChantRows": true,
+  "threeDigitExample": true
+}

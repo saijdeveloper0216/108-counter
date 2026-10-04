@@ -1,0 +1,842 @@
+[
+  {
+    "date": "2025-01-13",
+    "name": "Pausha",
+    "adhika": false
+  },
+  {
+    "date": "2025-02-11",
+    "name": "Magha",
+    "adhika": false
+  },
+  {
+    "date": "2025-02-12",
+    "name": "Magha",
+    "adhika": false
+  },
+  {
+    "date": "2025-03-13",
+    "name": "Phalguna",
+    "adhika": false
+  },
+  {
+    "date": "2025-04-12",
+    "name": "Chaitra",
+    "adhika": false
+  },
+  {
+    "date": "2025-05-11",
+    "name": "Vaishakha",
+    "adhika": false
+  },
+  {
+    "date": "2025-05-12",
+    "name": "Vaishakha",
+    "adhika": false
+  },
+  {
+    "date": "2025-06-10",
+    "name": "Jyeshtha",
+    "adhika": false
+  },
+  {
+    "date": "2025-07-10",
+    "name": "Ashadha",
+    "adhika": false
+  },
+  {
+    "date": "2025-08-08",
+    "name": "Shravana",
+    "adhika": false
+  },
+  {
+    "date": "2025-09-07",
+    "name": "Bhadrapada",
+    "adhika": false
+  },
+  {
+    "date": "2025-10-06",
+    "name": "Ashwina",
+    "adhika": false
+  },
+  {
+    "date": "2025-11-04",
+    "name": "Kartika",
+    "adhika": false
+  },
+  {
+    "date": "2025-11-05",
+    "name": "Kartika",
+    "adhika": false
+  },
+  {
+    "date": "2025-12-04",
+    "name": "Margashirsha",
+    "adhika": false
+  },
+  {
+    "date": "2026-01-02",
+    "name": "Pausha",
+    "adhika": false
+  },
+  {
+    "date": "2026-02-01",
+    "name": "Magha",
+    "adhika": false
+  },
+  {
+    "date": "2026-03-02",
+    "name": "Phalguna",
+    "adhika": false
+  },
+  {
+    "date": "2026-04-01",
+    "name": "Chaitra",
+    "adhika": false
+  },
+  {
+    "date": "2026-04-30",
+    "name": "Vaishakha",
+    "adhika": false
+  },
+  {
+    "date": "2026-05-01",
+    "name": "Vaishakha",
+    "adhika": false
+  },
+  {
+    "date": "2026-05-30",
+    "name": "Jyeshtha",
+    "adhika": true
+  },
+  {
+    "date": "2026-06-29",
+    "name": "Jyeshtha",
+    "adhika": false
+  },
+  {
+    "date": "2026-07-28",
+    "name": "Ashadha",
+    "adhika": false
+  },
+  {
+    "date": "2026-07-29",
+    "name": "Ashadha",
+    "adhika": false
+  },
+  {
+    "date": "2026-08-27",
+    "name": "Shravana",
+    "adhika": false
+  },
+  {
+    "date": "2026-09-25",
+    "name": "Bhadrapada",
+    "adhika": false
+  },
+  {
+    "date": "2026-09-26",
+    "name": "Bhadrapada",
+    "adhika": false
+  },
+  {
+    "date": "2026-10-25",
+    "name": "Ashwina",
+    "adhika": false
+  },
+  {
+    "date": "2026-11-24",
+    "name": "Kartika",
+    "adhika": false
+  },
+  {
+    "date": "2026-12-23",
+    "name": "Margashirsha",
+    "adhika": false
+  },
+  {
+    "date": "2027-01-21",
+    "name": "Pausha",
+    "adhika": false
+  },
+  {
+    "date": "2027-02-20",
+    "name": "Magha",
+    "adhika": false
+  },
+  {
+    "date": "2027-03-21",
+    "name": "Phalguna",
+    "adhika": false
+  },
+  {
+    "date": "2027-04-20",
+    "name": "Chaitra",
+    "adhika": false
+  },
+  {
+    "date": "2027-05-19",
+    "name": "Vaishakha",
+    "adhika": false
+  },
+  {
+    "date": "2027-05-20",
+    "name": "Vaishakha",
+    "adhika": false
+  },
+  {
+    "date": "2027-06-18",
+    "name": "Jyeshtha",
+    "adhika": false
+  },
+  {
+    "date": "2027-07-17",
+    "name": "Ashadha",
+    "adhika": false
+  },
+  {
+    "date": "2027-07-18",
+    "name": "Ashadha",
+    "adhika": false
+  },
+  {
+    "date": "2027-08-16",
+    "name": "Shravana",
+    "adhika": false
+  },
+  {
+    "date": "2027-09-15",
+    "name": "Bhadrapada",
+    "adhika": false
+  },
+  {
+    "date": "2027-10-14",
+    "name": "Ashwina",
+    "adhika": false
+  },
+  {
+    "date": "2027-10-15",
+    "name": "Ashwina",
+    "adhika": false
+  },
+  {
+    "date": "2027-11-13",
+    "name": "Kartika",
+    "adhika": false
+  },
+  {
+    "date": "2027-12-13",
+    "name": "Margashirsha",
+    "adhika": false
+  },
+  {
+    "date": "2028-01-11",
+    "name": "Pausha",
+    "adhika": false
+  },
+  {
+    "date": "2028-02-10",
+    "name": "Magha",
+    "adhika": false
+  },
+  {
+    "date": "2028-03-10",
+    "name": "Phalguna",
+    "adhika": false
+  },
+  {
+    "date": "2028-04-08",
+    "name": "Chaitra",
+    "adhika": false
+  },
+  {
+    "date": "2028-05-08",
+    "name": "Vaishakha",
+    "adhika": false
+  },
+  {
+    "date": "2028-06-06",
+    "name": "Jyeshtha",
+    "adhika": false
+  },
+  {
+    "date": "2028-07-05",
+    "name": "Ashadha",
+    "adhika": false
+  },
+  {
+    "date": "2028-07-06",
+    "name": "Ashadha",
+    "adhika": false
+  },
+  {
+    "date": "2028-08-04",
+    "name": "Shravana",
+    "adhika": false
+  },
+  {
+    "date": "2028-09-03",
+    "name": "Bhadrapada",
+    "adhika": false
+  },
+  {
+    "date": "2028-10-02",
+    "name": "Ashwina",
+    "adhika": false
+  },
+  {
+    "date": "2028-10-03",
+    "name": "Ashwina",
+    "adhika": false
+  },
+  {
+    "date": "2028-11-01",
+    "name": "Kartika",
+    "adhika": false
+  },
+  {
+    "date": "2028-12-01",
+    "name": "Margashirsha",
+    "adhika": false
+  },
+  {
+    "date": "2028-12-30",
+    "name": "Pausha",
+    "adhika": false
+  },
+  {
+    "date": "2028-12-31",
+    "name": "Pausha",
+    "adhika": false
+  },
+  {
+    "date": "2029-01-29",
+    "name": "Magha",
+    "adhika": false
+  },
+  {
+    "date": "2029-02-28",
+    "name": "Phalguna",
+    "adhika": false
+  },
+  {
+    "date": "2029-03-29",
+    "name": "Chaitra",
+    "adhika": true
+  },
+  {
+    "date": "2029-04-27",
+    "name": "Chaitra",
+    "adhika": false
+  },
+  {
+    "date": "2029-04-28",
+    "name": "Chaitra",
+    "adhika": false
+  },
+  {
+    "date": "2029-05-27",
+    "name": "Vaishakha",
+    "adhika": false
+  },
+  {
+    "date": "2029-06-25",
+    "name": "Jyeshtha",
+    "adhika": false
+  },
+  {
+    "date": "2029-07-24",
+    "name": "Ashadha",
+    "adhika": false
+  },
+  {
+    "date": "2029-07-25",
+    "name": "Ashadha",
+    "adhika": false
+  },
+  {
+    "date": "2029-08-23",
+    "name": "Shravana",
+    "adhika": false
+  },
+  {
+    "date": "2029-09-21",
+    "name": "Bhadrapada",
+    "adhika": false
+  },
+  {
+    "date": "2029-09-22",
+    "name": "Bhadrapada",
+    "adhika": false
+  },
+  {
+    "date": "2029-10-21",
+    "name": "Ashwina",
+    "adhika": false
+  },
+  {
+    "date": "2029-11-20",
+    "name": "Kartika",
+    "adhika": false
+  },
+  {
+    "date": "2029-12-20",
+    "name": "Margashirsha",
+    "adhika": false
+  },
+  {
+    "date": "2030-01-18",
+    "name": "Pausha",
+    "adhika": false
+  },
+  {
+    "date": "2030-01-19",
+    "name": "Pausha",
+    "adhika": false
+  },
+  {
+    "date": "2030-02-17",
+    "name": "Magha",
+    "adhika": false
+  },
+  {
+    "date": "2030-03-19",
+    "name": "Phalguna",
+    "adhika": false
+  },
+  {
+    "date": "2030-04-17",
+    "name": "Chaitra",
+    "adhika": false
+  },
+  {
+    "date": "2030-05-16",
+    "name": "Vaishakha",
+    "adhika": false
+  },
+  {
+    "date": "2030-05-17",
+    "name": "Vaishakha",
+    "adhika": false
+  },
+  {
+    "date": "2030-06-15",
+    "name": "Jyeshtha",
+    "adhika": false
+  },
+  {
+    "date": "2030-07-14",
+    "name": "Ashadha",
+    "adhika": false
+  },
+  {
+    "date": "2030-08-12",
+    "name": "Shravana",
+    "adhika": false
+  },
+  {
+    "date": "2030-08-13",
+    "name": "Shravana",
+    "adhika": false
+  },
+  {
+    "date": "2030-09-11",
+    "name": "Bhadrapada",
+    "adhika": false
+  },
+  {
+    "date": "2030-10-10",
+    "name": "Ashwina",
+    "adhika": false
+  },
+  {
+    "date": "2030-11-09",
+    "name": "Kartika",
+    "adhika": false
+  },
+  {
+    "date": "2030-12-09",
+    "name": "Margashirsha",
+    "adhika": false
+  },
+  {
+    "date": "2031-01-07",
+    "name": "Pausha",
+    "adhika": false
+  },
+  {
+    "date": "2031-01-08",
+    "name": "Pausha",
+    "adhika": false
+  },
+  {
+    "date": "2031-02-06",
+    "name": "Magha",
+    "adhika": false
+  },
+  {
+    "date": "2031-03-08",
+    "name": "Phalguna",
+    "adhika": false
+  },
+  {
+    "date": "2031-04-07",
+    "name": "Chaitra",
+    "adhika": false
+  },
+  {
+    "date": "2031-05-06",
+    "name": "Vaishakha",
+    "adhika": false
+  },
+  {
+    "date": "2031-06-04",
+    "name": "Jyeshtha",
+    "adhika": false
+  },
+  {
+    "date": "2031-06-05",
+    "name": "Jyeshtha",
+    "adhika": false
+  },
+  {
+    "date": "2031-07-04",
+    "name": "Ashadha",
+    "adhika": false
+  },
+  {
+    "date": "2031-08-02",
+    "name": "Shravana",
+    "adhika": false
+  },
+  {
+    "date": "2031-08-31",
+    "name": "Bhadrapada",
+    "adhika": true
+  },
+  {
+    "date": "2031-09-30",
+    "name": "Bhadrapada",
+    "adhika": false
+  },
+  {
+    "date": "2031-10-29",
+    "name": "Ashwina",
+    "adhika": false
+  },
+  {
+    "date": "2031-11-28",
+    "name": "Kartika",
+    "adhika": false
+  },
+  {
+    "date": "2031-12-27",
+    "name": "Margashirsha",
+    "adhika": false
+  },
+  {
+    "date": "2031-12-28",
+    "name": "Margashirsha",
+    "adhika": false
+  },
+  {
+    "date": "2032-01-26",
+    "name": "Pausha",
+    "adhika": false
+  },
+  {
+    "date": "2032-02-25",
+    "name": "Magha",
+    "adhika": false
+  },
+  {
+    "date": "2032-03-26",
+    "name": "Phalguna",
+    "adhika": false
+  },
+  {
+    "date": "2032-04-24",
+    "name": "Chaitra",
+    "adhika": false
+  },
+  {
+    "date": "2032-04-25",
+    "name": "Chaitra",
+    "adhika": false
+  },
+  {
+    "date": "2032-05-24",
+    "name": "Vaishakha",
+    "adhika": false
+  },
+  {
+    "date": "2032-06-22",
+    "name": "Jyeshtha",
+    "adhika": false
+  },
+  {
+    "date": "2032-06-23",
+    "name": "Jyeshtha",
+    "adhika": false
+  },
+  {
+    "date": "2032-07-22",
+    "name": "Ashadha",
+    "adhika": false
+  },
+  {
+    "date": "2032-08-20",
+    "name": "Shravana",
+    "adhika": false
+  },
+  {
+    "date": "2032-09-18",
+    "name": "Bhadrapada",
+    "adhika": false
+  },
+  {
+    "date": "2032-10-18",
+    "name": "Ashwina",
+    "adhika": false
+  },
+  {
+    "date": "2032-11-16",
+    "name": "Kartika",
+    "adhika": false
+  },
+  {
+    "date": "2032-12-16",
+    "name": "Margashirsha",
+    "adhika": false
+  },
+  {
+    "date": "2033-01-14",
+    "name": "Pausha",
+    "adhika": false
+  },
+  {
+    "date": "2033-02-13",
+    "name": "Magha",
+    "adhika": false
+  },
+  {
+    "date": "2033-03-15",
+    "name": "Phalguna",
+    "adhika": false
+  },
+  {
+    "date": "2033-04-13",
+    "name": "Chaitra",
+    "adhika": false
+  },
+  {
+    "date": "2033-04-14",
+    "name": "Chaitra",
+    "adhika": false
+  },
+  {
+    "date": "2033-05-13",
+    "name": "Vaishakha",
+    "adhika": false
+  },
+  {
+    "date": "2033-06-12",
+    "name": "Jyeshtha",
+    "adhika": false
+  },
+  {
+    "date": "2033-07-11",
+    "name": "Ashadha",
+    "adhika": false
+  },
+  {
+    "date": "2033-08-10",
+    "name": "Shravana",
+    "adhika": false
+  },
+  {
+    "date": "2033-09-08",
+    "name": "Bhadrapada",
+    "adhika": false
+  },
+  {
+    "date": "2033-10-07",
+    "name": "Ashwina",
+    "adhika": false
+  },
+  {
+    "date": "2033-11-06",
+    "name": "Kartika",
+    "adhika": false
+  },
+  {
+    "date": "2033-12-05",
+    "name": "Margashirsha",
+    "adhika": false
+  },
+  {
+    "date": "2034-01-04",
+    "name": "Pausha",
+    "adhika": false
+  },
+  {
+    "date": "2034-02-02",
+    "name": "Magha",
+    "adhika": false
+  },
+  {
+    "date": "2034-03-04",
+    "name": "Phalguna",
+    "adhika": false
+  },
+  {
+    "date": "2034-04-02",
+    "name": "Chaitra",
+    "adhika": false
+  },
+  {
+    "date": "2034-04-03",
+    "name": "Chaitra",
+    "adhika": false
+  },
+  {
+    "date": "2034-05-02",
+    "name": "Vaishakha",
+    "adhika": false
+  },
+  {
+    "date": "2034-06-01",
+    "name": "Jyeshtha",
+    "adhika": false
+  },
+  {
+    "date": "2034-06-30",
+    "name": "Ashadha",
+    "adhika": true
+  },
+  {
+    "date": "2034-07-01",
+    "name": "Ashadha",
+    "adhika": true
+  },
+  {
+    "date": "2034-07-30",
+    "name": "Ashadha",
+    "adhika": false
+  },
+  {
+    "date": "2034-08-28",
+    "name": "Shravana",
+    "adhika": false
+  },
+  {
+    "date": "2034-08-29",
+    "name": "Shravana",
+    "adhika": false
+  },
+  {
+    "date": "2034-09-27",
+    "name": "Bhadrapada",
+    "adhika": false
+  },
+  {
+    "date": "2034-10-26",
+    "name": "Ashwina",
+    "adhika": false
+  },
+  {
+    "date": "2034-10-27",
+    "name": "Ashwina",
+    "adhika": false
+  },
+  {
+    "date": "2034-11-25",
+    "name": "Kartika",
+    "adhika": false
+  },
+  {
+    "date": "2034-12-24",
+    "name": "Margashirsha",
+    "adhika": false
+  },
+  {
+    "date": "2035-01-23",
+    "name": "Pausha",
+    "adhika": false
+  },
+  {
+    "date": "2035-01-24",
+    "name": "Pausha",
+    "adhika": false
+  },
+  {
+    "date": "2035-02-22",
+    "name": "Magha",
+    "adhika": false
+  },
+  {
+    "date": "2035-03-23",
+    "name": "Phalguna",
+    "adhika": false
+  },
+  {
+    "date": "2035-03-24",
+    "name": "Phalguna",
+    "adhika": false
+  },
+  {
+    "date": "2035-04-22",
+    "name": "Chaitra",
+    "adhika": false
+  },
+  {
+    "date": "2035-05-21",
+    "name": "Vaishakha",
+    "adhika": false
+  },
+  {
+    "date": "2035-05-22",
+    "name": "Vaishakha",
+    "adhika": false
+  },
+  {
+    "date": "2035-06-20",
+    "name": "Jyeshtha",
+    "adhika": false
+  },
+  {
+    "date": "2035-07-20",
+    "name": "Ashadha",
+    "adhika": false
+  },
+  {
+    "date": "2035-08-18",
+    "name": "Shravana",
+    "adhika": false
+  },
+  {
+    "date": "2035-08-19",
+    "name": "Shravana",
+    "adhika": false
+  },
+  {
+    "date": "2035-09-17",
+    "name": "Bhadrapada",
+    "adhika": false
+  },
+  {
+    "date": "2035-10-17",
+    "name": "Ashwina",
+    "adhika": false
+  },
+  {
+    "date": "2035-11-15",
+    "name": "Kartika",
+    "adhika": false
+  },
+  {
+    "date": "2035-12-15",
+    "name": "Margashirsha",
+    "adhika": false
+  }
+]
